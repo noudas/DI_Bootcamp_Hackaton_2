@@ -1,0 +1,6 @@
+playerHealth = document.getElementById("player_heath")
+playerXP = document.getElementById("player_XP")
+cardContainer = document.getElementById("card_container")
+spellForm = document.getElementById("spell_form")
+spellInput= document.getElementById("spell_input")
+spellBtn = document.getElementById("spell_btn")
