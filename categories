@@ -1,5 +1,5 @@
-const categories = [
-    {"food":[
+const categories = {
+    food: [
         "Apple",
         "Banana",
         "Carrot",
@@ -20,8 +20,8 @@ const categories = [
         "Sushi",
         "Tacos",
         "Yogurt"
-    ]},
-    {"nouns":[
+    ],
+    nouns: [
         "Apple",
         "Book",
         "Chair",
@@ -42,8 +42,8 @@ const categories = [
         "Robot",
         "Star",
         "Tree"
-    ]},
-    {"sports":[
+    ],
+    sports: [
         "Baseball",
         "Basketball",
         "Cricket",
@@ -64,6 +64,5 @@ const categories = [
         "Volleyball",
         "Wrestling",
         "Yoga"
-    ]}
-]
-
+    ]
+};
