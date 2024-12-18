@@ -39,5 +39,4 @@ class Enemy extends Entity {
         }
     }
 
-
-}
+    module.exports = Enemy;
