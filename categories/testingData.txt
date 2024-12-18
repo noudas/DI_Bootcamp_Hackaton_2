@@ -1,0 +1,28 @@
+// this is a json to check endpoints
+
+{
+    "name": "drinks",
+    "words": [
+        "Water",
+        "Juice",
+        "Soda",
+        "Tea",
+        "Coffee",
+        "Alcohol",
+        "Cocktail",
+        "Mixology",
+        "Mug",
+        "Glass",
+        "Cup",
+        "Straw",
+        "Chill",
+        "Brew",
+        "Pour",
+        "Refresh",
+        "Shake",
+        "Blend",
+        "Serve",
+        "Taste",
+        "Savor"
+    ]
+}
