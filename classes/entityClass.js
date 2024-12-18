@@ -26,15 +26,13 @@ class Entity {
         this.health += amount
     }
 
-        // Check win condition
-        checkWin() {
-            return this.win_condition;
-        }
-    
-        // Check lose condition
-        checkLose() {
-            return this.lose_condition;
-        }
+    checkWin() {
+        return this.win_condition;
+    }
+
+    checkLose() {
+        return this.lose_condition;
+    }
 
 }
 
