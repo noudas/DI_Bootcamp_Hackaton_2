@@ -1,3 +1,8 @@
+const categories = [
+    "food",
+    "nouns",
+    "sports"]
+
 const food = [
     "Apple",
     "Banana",
