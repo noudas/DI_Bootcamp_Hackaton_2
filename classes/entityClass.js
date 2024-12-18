@@ -5,4 +5,30 @@ class Entity {
         this.win_condition = false;
         this.lose_condition = false;
     }
+
+    attackEntity(target) {
+        target.takeDamage(this.attack);
+    }
+
+    // Method to take damage
+    takeDamage(amount) {
+        this.health = Math.max(0, this.health - amount);
+        if (this.health === 0) {
+            this.lose_condition = true;
+        }
+    }
+    
+
+        // Check win condition
+        checkWin() {
+            return this.win_condition;
+        }
+    
+        // Check lose condition
+        checkLose() {
+            return this.lose_condition;
+        }
+
+
+
 }
