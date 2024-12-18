@@ -17,7 +17,15 @@ class Entity {
             this.lose_condition = true;
         }
     }
-    
+
+    healEmtity(target){
+        target.healDamage(this.attack)
+    }
+
+    healDamage(amount){
+        this.health += amount
+    }
+
 
         // Check win condition
         checkWin() {
