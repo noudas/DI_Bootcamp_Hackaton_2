@@ -55,3 +55,23 @@ router.patch("/:name/heal",(req,res) => {
         res.status(404).json({ error: error.message });
     }
 });
+
+router.get("/:name/win", (req, res) => {
+    const { name } = req.params;
+    try {
+        const winCondition = playerController.checkWin(name);
+        res.status(200).json({ win: winCondition });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+router.get("/:name/death", (req, res) => {
+    const { name } = req.params;
+    try {
+        const deathCondition = playerController.checkDeath(name);
+        res.status(200).json({ death: deathCondition });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
