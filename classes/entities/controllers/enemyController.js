@@ -5,7 +5,7 @@ class EnemyController{
         this.enemies = {}
     };
 
-    createEnemy(name, health = 10, attack = 10, weakness = "") {
+    createEnemy(name, health = 10, attack = 1, weakness = "") {
         if (this.enemies[name]) {
             throw new Error("Enemy with this name already exists.");
         }
