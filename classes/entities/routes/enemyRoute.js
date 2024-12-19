@@ -11,3 +11,14 @@ router.post("/create", (req,res) =>{
         res.status(400).json({ error: error.message });
     }
 });
+
+router.get("/:name",(req,res) =>{
+    const { name } = req.params;
+    try {
+        const enemy = enemyController.findEnemyByName(name);
+        res.status(200).json(enemy);
+    } catch (error) {
+        res.status(404).json({ error: error.message });
+    }
+});
+
