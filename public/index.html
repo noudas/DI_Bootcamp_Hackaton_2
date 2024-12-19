@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
     <script src="script.js" async defer></script>
 </head>
+
 <body>
-    <nav><h1>Wordeneering</h1></nav>
-    <article id = "player_stats">
-        <p id = "player_heath" class = "player_info">PLAYER HEALTH:</p>
-        <p id = "player_XP" class = "player_info">PLAYER XP:</p>
+    <nav>
+        <h1>Wordeneering</h1>
+    </nav>
+    <article id="player_stats">
+        <p id="player_health" class="player_info">PLAYER HEALTH:</p>
+        <p id="player_XP" class="player_info">PLAYER XP:</p>
     </article>
-    <main id = "main">
-        <article id = "card_container"></article>
-        <form id =' spell_form'>
+    <main id="main">
+        <article id="card_container"></article>
+        <form id=' spell_form'>
             <input type="text" name="spell_input" id="spell_input" placeholder="Enter Spell">
             <button id="spell_btn">Cast</button>
         </form>
-    </main>
-    
+        <table border="1" id="word_table">
+            <caption>Categories</caption>
 
+        </table>
+    </main>
 </body>
 </html>

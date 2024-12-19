@@ -19,7 +19,7 @@ require("dotenv").config();
 
 
 const categories = {
-    food: [
+    Food: [
         "Apple",
         "Banana",
         "Carrot",
@@ -41,7 +41,7 @@ const categories = {
         "Tacos",
         "Yogurt"
     ],
-    nouns: [
+    Nouns: [
         "Apple",
         "Book",
         "Chair",
@@ -63,7 +63,7 @@ const categories = {
         "Star",
         "Tree"
     ],
-    sports: [
+    Sports: [
         "Baseball",
         "Basketball",
         "Cricket",
