@@ -21,3 +21,15 @@ router.get("/:name",(req,res) =>{
         res.status(404).json({ error: error.message });
     }
 });
+
+router.patch("/:name/score",(req,res) => {
+    const { name } = req.params;
+    const { points } = req.body;
+    try {
+        const player = playerController.addScoretoPlayer(name,points);
+        res.status(200).json(player);
+    } catch (error) {
+        res.status(404).json({ error: error.message });
+    }
+});
+
