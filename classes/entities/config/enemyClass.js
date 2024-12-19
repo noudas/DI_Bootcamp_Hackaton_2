@@ -1,4 +1,4 @@
-const Entity = require("../../entityClass")
+const Entity = require("./entityClass")
 
 class Enemy extends Entity {
     constructor(health = 10, attack = 10, weakness = "") {
