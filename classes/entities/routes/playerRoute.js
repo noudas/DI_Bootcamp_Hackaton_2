@@ -33,3 +33,13 @@ router.patch("/:name/score",(req,res) => {
     }
 });
 
+router.patch("/:name/damage",(req,res) => {
+    const { name } = req.params;
+    const { amount } = req.body;
+    try {
+        const player = playerController.damagePlayer(name,amount);
+        res.status(200).json(player);
+    } catch (error) {
+        res.status(404).json({ error: error.message });
+    }
+});
