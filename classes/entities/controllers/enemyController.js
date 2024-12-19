@@ -1,0 +1,1 @@
+const Enemy = require("../config/enemyClass")
