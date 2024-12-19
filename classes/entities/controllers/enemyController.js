@@ -22,4 +22,22 @@ class EnemyController{
         return enemy;
     };
 
+    damageEnemy(name, amount, attackType = "") {
+        const enemy = this.findEnemyByName(name);
+        enemy.takeDamage(amount, attackType);
+        return enemy;
+    }
+
+    enemyAttackPlayer(name, player) {
+        const enemy = this.findEnemyByName(name);
+        enemy.attackPlayer(player);
+        return { enemy, player };
+    }
+
+    checkEnemyDeath(name) {
+        const enemy = this.findEnemyByName(name);
+        return enemy.checkDeathCondition();
+    }
+
+
 };
