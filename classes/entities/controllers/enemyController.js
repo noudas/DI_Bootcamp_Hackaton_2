@@ -28,6 +28,12 @@ class EnemyController{
         return enemy;
     }
 
+    healEnemy(name, amount){
+        const enemy = this.findEnemyByName(name);
+        enemy.healDamage(amount);
+        return enemy
+    }
+
     enemyAttackPlayer(name, player) {
         const enemy = this.findEnemyByName(name);
         enemy.attackPlayer(player);
@@ -55,3 +61,5 @@ class EnemyController{
     }
 
 };
+
+module.exports = new EnemyController();
