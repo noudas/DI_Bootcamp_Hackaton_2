@@ -75,3 +75,5 @@ router.get("/:name/death", (req, res) => {
         res.status(400).json({ error: error.message });
     }
 });
+
+module.exports = router;
