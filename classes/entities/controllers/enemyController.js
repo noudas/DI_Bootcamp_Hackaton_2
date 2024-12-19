@@ -1,4 +1,4 @@
-const Enemy = require("../config/enemyClass")
+const Enemy = require("../config/enemyClass");
 
 class EnemyController{
     constructor(){
