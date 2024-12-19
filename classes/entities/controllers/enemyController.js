@@ -26,39 +26,39 @@ class EnemyController{
         const enemy = this.findEnemyByName(name);
         enemy.takeDamage(amount, attackType);
         return enemy;
-    }
+    };
 
     healEnemy(name, amount){
         const enemy = this.findEnemyByName(name);
         enemy.healDamage(amount);
         return enemy
-    }
+    };
 
     enemyAttackPlayer(name, player) {
         const enemy = this.findEnemyByName(name);
         enemy.attackPlayer(player);
         return { enemy, player };
-    }
+    };
 
     checkEnemyDeath(name) {
         const enemy = this.findEnemyByName(name);
         return enemy.checkDeathCondition();
-    }
+    };
 
     checkEnemyWin(name, player) {
         const enemy = this.findEnemyByName(name);
         return enemy.checkWinCondition(player);
-    }
+    };
 
     getAllEnemies() {
         return Object.values(this.enemies);
-    }
+    };
 
     removeEnemy(name) {
         const enemy = this.findEnemyByName(name);
         delete this.enemies[name];
         return enemy;
-    }
+    };
 
 };
 
