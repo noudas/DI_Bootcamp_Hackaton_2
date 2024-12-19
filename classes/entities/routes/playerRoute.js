@@ -11,3 +11,13 @@ router.post("/create",(req,res) =>{
         res.status(400).json({ error: error.message });
     }
 });
+
+router.get("/:name",(req,res) =>{
+    const { name } = req.params;
+    try {
+        const player = playerController.findPlayerByName(name);
+        res.status(200).json(player);
+    } catch (error) {
+        res.status(404).json({ error: error.message });
+    }
+});
