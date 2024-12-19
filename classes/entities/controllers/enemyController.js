@@ -39,5 +39,19 @@ class EnemyController{
         return enemy.checkDeathCondition();
     }
 
+    checkEnemyWin(name, player) {
+        const enemy = this.findEnemyByName(name);
+        return enemy.checkWinCondition(player);
+    }
+
+    getAllEnemies() {
+        return Object.values(this.enemies);
+    }
+
+    removeEnemy(name) {
+        const enemy = this.findEnemyByName(name);
+        delete this.enemies[name];
+        return enemy;
+    }
 
 };
