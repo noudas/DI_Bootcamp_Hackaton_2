@@ -86,74 +86,66 @@ getCategories().then(categories => {
 })
 
 
-const getEnemy = () => {
-
-    return fetch(enemiesApiUrl)
-        .then((response) => {
-            if (response.ok) {
-                return response.json()
-            } else {
-                throw new Error("Error fetching enemies")
-            }
-        })
-        .catch(function (error) {
-            console.log(error)
-        });
-}
-
-getEnemy().then(enemies => {
-    if (enemies) {
-        enemies.forEach(enemy => {
-            //create card
-            const enemyCard = document.createElement('div')
-            enemyCard.classList.add('enemy_card')
-            enemyCard.classList.add(`${enemy.name}`)
-            // create img element
-            const enemyImg = document.createElement('img')// add later
-            enemyImg.classList.add('enemy_img')
-            enemyImg.src= monsters[imgIndex++]
-
-            // create name element and initialise
-            const enemyName = document.createElement('h2')
-            enemyName.classList.add('enemy_name')
-            enemyName.textContent = `${enemy.name}`
-
-            //create health element  and initialise
-            const enemyHealth = document.createElement('p')
-            enemyHealth.classList.add('enemy_health')
-            enemyHealth.textContent = `Health: ${enemy.attributes.health}`
-
-            //create attack element and initialise
-            const enemyAttack = document.createElement('p')
-            enemyAttack.classList.add('enemy_attack')
-            enemyAttack.textContent = `Attack: ${enemy.attributes.attack}`
-
-            //create weakness element and initialise
-            const enemyWeakness = document.createElement('p')
-            enemyWeakness.classList.add('enemy_weakness')
-            enemyWeakness.textContent = `Weekness: ${enemy.attributes.weakness}`
-
-            // Append elements to card
-            enemyCard.appendChild(enemyImg)
-            enemyCard.appendChild(enemyName)
-            enemyCard.appendChild(enemyHealth)
-            enemyCard.appendChild(enemyAttack)
-            enemyCard.appendChild(enemyWeakness)
-
-            cardContainer.appendChild(enemyCard)
-
-
-            enemyCard.addEventListener('click', function(){
-                selectedMonster = enemy.name
-            }
-        )
-        })
-
+const getEnemy = async () => {
+    try {
+        const response = await fetch(enemiesApiUrl);
+        if (!response.ok) {
+            throw new Error("Error fetching enemies");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Failed to fetch enemies:", error);
     }
+};
 
+const createEnemyCard = (enemy) => {
+    const enemyCard = document.createElement('div');
+    enemyCard.classList.add('enemy_card', `${enemy.name}`);
 
+    const enemyImg = document.createElement('img');
+    enemyImg.classList.add('enemy_img');
+    enemyImg.src = monsters[imgIndex++];
 
-})
+    const enemyName = document.createElement('h2');
+    enemyName.classList.add('enemy_name');
+    enemyName.textContent = enemy.name;
+
+    const enemyHealth = document.createElement('p');
+    enemyHealth.classList.add('enemy_health');
+    enemyHealth.textContent = `Health: ${enemy.attributes.health}`;
+
+    const enemyAttack = document.createElement('p');
+    enemyAttack.classList.add('enemy_attack');
+    enemyAttack.textContent = `Attack: ${enemy.attributes.attack}`;
+
+    const enemyWeakness = document.createElement('p');
+    enemyWeakness.classList.add('enemy_weakness');
+    enemyWeakness.textContent = `Weakness: ${enemy.attributes.weakness}`;
+
+    // Append all child elements to the enemy card
+    enemyCard.append(enemyImg, enemyName, enemyHealth, enemyAttack, enemyWeakness);
+
+    // Attach click event listener
+    enemyCard.addEventListener('click', () => {
+        selectedMonster = enemy.name;
+    });
+
+    return enemyCard;
+};
+
+const renderEnemies = async () => {
+    const enemies = await getEnemy();
+    if (!enemies) return;
+
+    enemies.forEach(enemy => {
+        const enemyCard = createEnemyCard(enemy);
+        cardContainer.appendChild(enemyCard);
+    });
+};
+
+// Call renderEnemies to initialize
+renderEnemies();
+
 
 async function playerAttack(enemyName, playerWord) {
     try {
@@ -197,7 +189,3 @@ const checkEnemyAlive = async () => {
 };
 
 setInterval(checkEnemyAlive, 500);
-
-async function enemyAttack(params) {
-    
-}
