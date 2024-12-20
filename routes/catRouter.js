@@ -5,7 +5,7 @@ const {
     getAllWordsInCat,
     addNewCat,
     deleteCat,
-} =require('../controllers/catControllers.js')
+} = require('../controllers/catControllers.js')
 
 const router = Router();
 
@@ -20,8 +20,6 @@ router.post("/api/categories", addNewCat)
 
 // delete category
 router.delete("/api/categories/:category", deleteCat)
-
-
 
 module.exports = {
     catRouter: router,

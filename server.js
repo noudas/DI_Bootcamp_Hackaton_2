@@ -9,13 +9,11 @@ const PORT = 5000;
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
 app.use("/players", playerRoutes);
 app.use("/enemies", enemyRoutes);
-app.use("/",catRouter)
-
-app.use(express.json());
-
+app.use("/categories",catRouter)
 
 
 
