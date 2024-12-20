@@ -12,7 +12,7 @@ app.use(cors());
 
 app.use("/players", playerRoutes);
 app.use("/enemies", enemyRoutes);
-app.use("/categories",catRouter)
+app.use("/",catRouter)
 
 app.use(express.json());
 

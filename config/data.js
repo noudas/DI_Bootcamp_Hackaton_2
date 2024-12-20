@@ -1,5 +1,5 @@
 // const knex = require("knex");
-require("dotenv").config();
+// require("dotenv").config();
 
 
 
