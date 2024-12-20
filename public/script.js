@@ -86,46 +86,31 @@ getCategories().then(categories => {
 })
 
 
+// Fetch enemies from the API
 const getEnemy = async () => {
     try {
         const response = await fetch(enemiesApiUrl);
-        if (!response.ok) {
-            throw new Error("Error fetching enemies");
-        }
-        return await response.json();
+        if (!response.ok) throw new Error("Error fetching enemies");
+        return response.json();
     } catch (error) {
         console.error("Failed to fetch enemies:", error);
+        return null; // Return null to handle gracefully when fetch fails
     }
 };
 
+// Create an enemy card element
 const createEnemyCard = (enemy) => {
     const enemyCard = document.createElement('div');
-    enemyCard.classList.add('enemy_card', `${enemy.name}`);
+    enemyCard.classList.add('enemy_card', enemy.name);
 
-    const enemyImg = document.createElement('img');
-    enemyImg.classList.add('enemy_img');
-    enemyImg.src = monsters[imgIndex++];
+    enemyCard.innerHTML = `
+        <img class="enemy_img" src="${monsters[imgIndex++]}" alt="${enemy.name}">
+        <h2 class="enemy_name">${enemy.name}</h2>
+        <p class="enemy_health">Health: ${enemy.attributes.health}</p>
+        <p class="enemy_attack">Attack: ${enemy.attributes.attack}</p>
+        <p class="enemy_weakness">Weakness: ${enemy.attributes.weakness}</p>
+    `;
 
-    const enemyName = document.createElement('h2');
-    enemyName.classList.add('enemy_name');
-    enemyName.textContent = enemy.name;
-
-    const enemyHealth = document.createElement('p');
-    enemyHealth.classList.add('enemy_health');
-    enemyHealth.textContent = `Health: ${enemy.attributes.health}`;
-
-    const enemyAttack = document.createElement('p');
-    enemyAttack.classList.add('enemy_attack');
-    enemyAttack.textContent = `Attack: ${enemy.attributes.attack}`;
-
-    const enemyWeakness = document.createElement('p');
-    enemyWeakness.classList.add('enemy_weakness');
-    enemyWeakness.textContent = `Weakness: ${enemy.attributes.weakness}`;
-
-    // Append all child elements to the enemy card
-    enemyCard.append(enemyImg, enemyName, enemyHealth, enemyAttack, enemyWeakness);
-
-    // Attach click event listener
     enemyCard.addEventListener('click', () => {
         selectedMonster = enemy.name;
     });
@@ -133,17 +118,36 @@ const createEnemyCard = (enemy) => {
     return enemyCard;
 };
 
+// Render all enemies
 const renderEnemies = async () => {
     const enemies = await getEnemy();
     if (!enemies) return;
 
+    const fragment = document.createDocumentFragment();
     enemies.forEach(enemy => {
         const enemyCard = createEnemyCard(enemy);
-        cardContainer.appendChild(enemyCard);
+        fragment.appendChild(enemyCard);
+    });
+    cardContainer.appendChild(fragment); // Add all cards at once for better performance
+};
+
+// Check if enemies are alive and hide defeated ones
+const checkEnemyAlive = async () => {
+    const enemies = await getEnemy();
+    if (!enemies) return;
+
+    enemies.forEach(enemy => {
+        if (enemy.attributes.lose_condition) {
+            const enemyCard = document.querySelector(`.${enemy.name}`);
+            if (enemyCard) enemyCard.style.display = "none";
+        }
     });
 };
 
-// Call renderEnemies to initialize
+// Run checkEnemyAlive every 500ms
+setInterval(checkEnemyAlive, 500);
+
+// Initialize by rendering enemies
 renderEnemies();
 
 
@@ -170,22 +174,3 @@ async function playerAttack(enemyName, playerWord) {
     }
 }
 
-const checkEnemyAlive = async () => {
-    try {
-        const enemies = await getEnemy();
-        if (enemies) {
-            enemies.forEach(enemy => {
-                if (enemy.attributes.lose_condition) {
-                    const enemyCard = document.querySelector(`.${enemy.name}`);
-                    if (enemyCard) {
-                        enemyCard.style.display = "none"; // Hide the card
-                    }
-                }
-            });
-        }
-    } catch (error) {
-        console.error("Error checking enemy status:", error);
-    }
-};
-
-setInterval(checkEnemyAlive, 500);
