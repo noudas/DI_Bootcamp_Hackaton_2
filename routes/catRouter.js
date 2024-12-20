@@ -10,16 +10,16 @@ const {
 const router = Router();
 
 // get everything form categories
-router.get("/api/categories", getAllCats)
+router.get("/", getAllCats)
 
 // get all <category> words
-router.get("/api/categories/:category", getAllWordsInCat )
+router.get("/:category", getAllWordsInCat )
 
 // add new category
-router.post("/api/categories", addNewCat)
+router.post("/", addNewCat)
 
 // delete category
-router.delete("/api/categories/:category", deleteCat)
+router.delete("/:category", deleteCat)
 
 module.exports = {
     catRouter: router,
