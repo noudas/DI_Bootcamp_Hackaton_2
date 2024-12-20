@@ -1,18 +1,30 @@
-const playerHealth = document.getElementById("player_health")
-const playerXP = document.getElementById("player_XP")
-const cardContainer = document.getElementById("card_container")
-const spellForm = document.getElementById("spell_form")
-const spellInput = document.getElementById("spell_input")
-const spellBtn = document.getElementById("spell_btn")
-const wordTable = document.getElementById("word_table")
-const monsterSection = document.getElementById("MonsterCards")
-const selectedMonster = ""
+// HTML Document
 
+// Document Related
+const wordTable = document.getElementById("word_table");
+const spellForm = document.getElementById("spell_form");
+
+// Player Related
+const playerHealth = document.getElementById("player_health");
+const playerXP = document.getElementById("player_XP");
+const spellInput = document.getElementById("spell_input");
+const spellBtn = document.getElementById("spell_btn");
+
+// Monster Related
+const cardContainer = document.getElementById("card_container");
+const monsterSection = document.getElementById("MonsterCards");
+const battleSection = document.getElementById("Battle");
+const selectedMonster = "";
+
+// APIs URLs
 const playerAPIURL = 'http://localhost:5000/player/';
-const catApiUrl = 'http://localhost:5000/categories/'
-const enemiesApiUrl = 'http://localhost:5000/enemies/'
+const catApiUrl = 'http://localhost:5000/categories/';
+const enemiesApiUrl = 'http://localhost:5000/enemies/';
 
 
+
+
+//Monster Cards
 const monsters = [
     "https://robohash.org/P1Q.png?set=set2&size=150x150",
     "https://robohash.org/NHX.png?set=set2&size=150x150",
@@ -21,71 +33,6 @@ const monsters = [
     "https://robohash.org/VVN.png?set=set2&size=150x150"
 ]
 let imgIndex = 0
-let playerWord = ''
-
-spellBtn.addEventListener('click', function(event){
-    event.preventDefault()
-    playerWord = spellInput.value
-    spellInput.value = ''
-    console.log(playerWord);
-});
-
-
-const getCategories = () => {
-
-    return fetch(catApiUrl)
-        .then((response) => {
-            if (response.ok) {
-                return response.json()
-            } else {
-                throw new Error("Error fetching categories")
-            }
-        })
-        .catch(function (error) {
-            console.log(error)
-        });
-};
-
-getCategories().then(categories => {
-    if (categories) {
-        Object.keys(categories).forEach(categoryName => {
-            const tHead = document.createElement('thead')
-            const tRow = document.createElement('tr')
-            const tH = document.createElement('th')
-
-            tH.innerHTML = `<strong>${categoryName}</strong>`
-            tRow.appendChild(tH)
-            tHead.appendChild(tRow)
-            wordTable.appendChild(tHead)
-
-            const tBody = document.createElement('tbody')
-            const columnCount = 5
-            const words = categories[categoryName]
-            const rowCount = Math.ceil(words.length / columnCount);
-
-
-
-            for (let row = 0; row < rowCount; row++) {
-                const tRowBody = document.createElement('tr')
-                for (let col = 0; col < columnCount; col++) {
-                    const index = row * columnCount + col
-                    if (index < words.length) {
-                        const tD = document.createElement('td')
-                        tD.textContent = words[index]
-                        tRowBody.appendChild(tD)
-                    }
-                }
-                tBody.appendChild(tRowBody)
-            }
-
-            wordTable.appendChild(tBody)
-
-        });
-
-    }
-})
-
-
 // Fetch enemies from the API
 const getEnemy = async () => {
     try {
@@ -151,6 +98,70 @@ setInterval(checkEnemyAlive, 500);
 renderEnemies();
 
 
+
+// Battle Screen
+
+
+let playerWord = ''
+
+const getCategories = () => {
+
+    return fetch(catApiUrl)
+        .then((response) => {
+            if (response.ok) {
+                return response.json()
+            } else {
+                throw new Error("Error fetching categories")
+            }
+        })
+        .catch(function (error) {
+            console.log(error)
+        });
+};
+
+getCategories().then(categories => {
+    if (categories) {
+        Object.keys(categories).forEach(categoryName => {
+            const tHead = document.createElement('thead')
+            const tRow = document.createElement('tr')
+            const tH = document.createElement('th')
+
+            tH.innerHTML = `<strong>${categoryName}</strong>`
+            tRow.appendChild(tH)
+            tHead.appendChild(tRow)
+            wordTable.appendChild(tHead)
+
+            const tBody = document.createElement('tbody')
+            const columnCount = 5
+            const words = categories[categoryName]
+            const rowCount = Math.ceil(words.length / columnCount);
+
+
+
+            for (let row = 0; row < rowCount; row++) {
+                const tRowBody = document.createElement('tr')
+                for (let col = 0; col < columnCount; col++) {
+                    const index = row * columnCount + col
+                    if (index < words.length) {
+                        const tD = document.createElement('td')
+                        tD.textContent = words[index]
+                        tRowBody.appendChild(tD)
+                    }
+                }
+                tBody.appendChild(tRowBody)
+            }
+
+            wordTable.appendChild(tBody)
+
+        });
+
+    }
+})
+
+
+
+
+
 async function playerAttack(enemyName, playerWord) {
     try {
         const response = await fetch(`${enemiesApiUrl}/${enemyName}/damage`, {
@@ -172,5 +183,18 @@ async function playerAttack(enemyName, playerWord) {
         console.error('Error in playerAttack:', error.message);
         throw error;
     }
-}
+};
 
+
+//Event Listeners
+spellBtn.addEventListener('click', function(event){
+    event.preventDefault()
+    playerWord = spellInput.value
+    spellInput.value = ''
+    console.log(playerWord);
+});
+
+cardContainer.addEventListener('click', function(event) {
+    monsterSection.style.display = "none";
+    battleSection.style.display = "block";
+});
