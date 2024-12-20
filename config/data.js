@@ -86,4 +86,9 @@ const categories = {
         "Yoga"
     ]};
 
+   
+
+    
+
+
 module.exports={categories};
