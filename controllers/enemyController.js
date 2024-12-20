@@ -63,8 +63,8 @@ class EnemyController {
     }
 
     getAllEnemies() {
-        return Object.entries(this.enemies).map(([name, attributes]) => ({ name, attributes }));
-    }
+        return Object.entries(this.enemies).map(([name, attributes]) => ({ name, attributes }));
+    }
 
     removeEnemy(name) {
         const enemy = this.findEnemyByName(name);
