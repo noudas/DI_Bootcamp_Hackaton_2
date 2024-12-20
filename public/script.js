@@ -17,7 +17,6 @@ spellBtn.addEventListener('click', function(event){
     playerWord = spellInput.value
     spellInput.value = ''
     console.log(playerWord);
-    
 });
 
 
@@ -140,6 +139,29 @@ getEnemy().then(enemies => {
 
 })
 
-async function playerAttack(playerWord) {
-    const response = await fetch(`${enemiesApiUrl}/`)
+async function playerAttack(enemyName, playerWord) {
+    try {
+        const response = await fetch(`${enemiesApiUrl}/${enemyName}/damage`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ word: playerWord }), // Include the 'word' in the body
+        });
+
+        if (!response.ok) {
+            throw new Error(`Something went wrong: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Enemy damaged:', data);
+        return data;
+    } catch (error) {
+        console.error('Error in playerAttack:', error.message);
+        throw error;
+    }
+}
+
+async function enemyAttack(params) {
+    
 }

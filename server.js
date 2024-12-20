@@ -9,6 +9,7 @@ const PORT = 5000;
 
 const app = express();
 app.use(cors());
+app.use("/", express.static(__dirname + "/public"));
 app.use(express.json());
 
 app.use("/players", playerRoutes);
@@ -18,7 +19,7 @@ app.use("/categories",catRouter)
 
 
 // Health Check Endpoint
-app.get("/", (req, res) => {
+app.get("/healthcheck", (req, res) => {
     res.status(200).send("Server is running successfully!");
 });
 
@@ -31,3 +32,4 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`run on ${PORT}`);
 });
+
