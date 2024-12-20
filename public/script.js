@@ -178,7 +178,25 @@ async function playerAttack(enemyName, playerWord) {
     }
 }
 
+const checkEnemyAlive = async () => {
+    try {
+        const enemies = await getEnemy();
+        if (enemies) {
+            enemies.forEach(enemy => {
+                if (enemy.attributes.lose_condition) {
+                    const enemyCard = document.querySelector(`.${enemy.name}`);
+                    if (enemyCard) {
+                        enemyCard.style.display = "none"; // Hide the card
+                    }
+                }
+            });
+        }
+    } catch (error) {
+        console.error("Error checking enemy status:", error);
+    }
+};
 
+setInterval(checkEnemyAlive, 500);
 
 async function enemyAttack(params) {
     
