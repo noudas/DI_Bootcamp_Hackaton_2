@@ -1,20 +1,16 @@
+const playerHealth = document.getElementById("player_health");
+const playerXP = document.getElementById("player_XP");
+const cardContainer = document.getElementById("card_container");
+const spellForm = document.getElementById("spell_form");
+const spellInput = document.getElementById("spell_input");
+const spellBtn = document.getElementById("spell_btn");
+const wordTable = document.getElementById("word_table");
 
-// const { categories } = require('../categories/config/data.js')
-
-const playerHealth = document.getElementById("player_health")
-const playerXP = document.getElementById("player_XP")
-const cardContainer = document.getElementById("card_container")
-const spellForm = document.getElementById("spell_form")
-const spellInput = document.getElementById("spell_input")
-const spellBtn = document.getElementById("spell_btn")
-const wordTable = document.getElementById("word_table")
-
-
-const catApiUrl = 'http://localhost:5000/categories/'
-const enemiesApiUrl = 'http://localhost:5000/enemies/'
+const playerAPIURL = 'http://localhost:5000/player/';
+const catApiUrl = 'http://localhost:5000/categories/';
+const enemiesApiUrl = 'http://localhost:5000/enemies/';
 
 let playerWord =  ''
-
 
 spellBtn.addEventListener('click', function(event){
     event.preventDefault()
@@ -22,8 +18,7 @@ spellBtn.addEventListener('click', function(event){
     spellInput.value = ''
     console.log(playerWord);
     
-})
-
+});
 
 
 const getCategories = () => {
@@ -39,9 +34,7 @@ const getCategories = () => {
         .catch(function (error) {
             console.log(error)
         });
-}
-
-
+};
 
 getCategories().then(categories => {
     if (categories) {
@@ -146,3 +139,7 @@ getEnemy().then(enemies => {
 
 
 })
+
+async function playerAttack(playerWord) {
+    const response = await fetch(`${enemiesApiUrl}/`)
+}

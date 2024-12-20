@@ -24,9 +24,9 @@ router.get("/:name", (req, res) => {
 });
 
 router.patch("/:name/damage", (req, res) => {
-    const { amount, attackType } = req.body;
+    const { word } = req.body;
     try {
-        const enemy = enemyController.damageEnemy(req.params.name, amount, attackType);
+        const enemy = enemyController.damageEnemyWithWord(req.params.name, word);
         res.status(200).json({ message: "Enemy damaged", enemy });
     } catch (error) {
         res.status(400).json({ error: error.message });
