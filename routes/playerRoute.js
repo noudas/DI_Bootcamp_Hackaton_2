@@ -2,6 +2,15 @@ const express = require("express");
 const router = express.Router();
 const playerController = require("../controllers/playerController");
 
+router.get("/", (req,res) => {
+    try {
+        const players = playerController.getAllPlayers();
+        res.status(200).json(players);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+})
+
 router.post("/create", (req, res) => {
     const { name, health, attack, score } = req.body;
     try {

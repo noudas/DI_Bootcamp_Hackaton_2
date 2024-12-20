@@ -17,7 +17,7 @@ const battleSection = document.getElementById("Battle");
 const selectedMonster = "";
 
 // APIs URLs
-const playerAPIURL = 'http://localhost:5000/player/';
+const playerAPIURL = 'http://localhost:5000/players/';
 const catApiUrl = 'http://localhost:5000/categories/';
 const enemiesApiUrl = 'http://localhost:5000/enemies/';
 
@@ -99,8 +99,25 @@ renderEnemies();
 
 
 
-// Battle Screen
+// Player
+// Fetch player from the API
+const getPlayer = async () => {
+    try {
+        const response = await fetch(playerAPIURL);
+        if (!response.ok) throw new Error("Error fetching players");
+        return response.json();
+    } catch (error) {
+        console.error("Failed to fetch players:", error);
+        return null; // Return null to handle gracefully when fetch fails
+    }
+};
 
+const getPlayerHP = async () => {
+    const player = await getPlayer()
+    console.log(player);
+};
+
+getPlayerHP();
 
 let playerWord = ''
 
@@ -157,7 +174,6 @@ getCategories().then(categories => {
 
     }
 })
-
 
 
 

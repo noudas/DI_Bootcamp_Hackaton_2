@@ -5,6 +5,10 @@ class PlayerController {
     constructor() {
         this.players = [];
     }
+    
+    getAllPlayers() {
+        return this.players;
+    }
 
     createNewPlayer(name, health = 10, attack = 1, score = 0) {
         const newPlayer = new Player(health, attack, score);
