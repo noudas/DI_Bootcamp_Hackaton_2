@@ -14,20 +14,28 @@
     <nav>
         <h1>Wordeneering</h1>
     </nav>
-    <article id="player_stats">
-        <p id="player_health" class="player_info">PLAYER HEALTH:</p>
-        <p id="player_XP" class="player_info">PLAYER XP:</p>
-    </article>
-    <main id="main">
-        <article id="card_container"></article>
-        <form id=' spell_form'>
-            <input type="text" name="spell_input" id="spell_input" placeholder="Enter Spell">
-            <button id="spell_btn">Cast</button>
-        </form>
-        <table border="1" id="word_table">
-            <caption>Categories</caption>
 
-        </table>
-    </main>
+    <section id="MonsterCards" style="display: block;">
+        <article id="card_container"></article>
+    </section>
+
+    <section id="Battle" style="display: none;">
+        <article id="player_stats">
+            <p id="player_health" class="player_info">PLAYER HEALTH:</p>
+            <p id="player_XP" class="player_info">PLAYER XP:</p>
+        </article>
+        <main id="main" style="display: hidden;">
+            
+            <form id=' spell_form'>
+                <input type="text" name="spell_input" id="spell_input" placeholder="Enter Spell">
+                <button id="spell_btn">Cast</button>
+            </form>
+            <table border="1" id="word_table">
+                <caption>Categories</caption>
+    
+            </table>
+        </main>
+    </section>
+
 </body>
 </html>

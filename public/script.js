@@ -5,6 +5,7 @@ const spellForm = document.getElementById("spell_form")
 const spellInput = document.getElementById("spell_input")
 const spellBtn = document.getElementById("spell_btn")
 const wordTable = document.getElementById("word_table")
+const monsterSection = document.getElementById("MonsterCards")
 const selectedMonster = ""
 
 const playerAPIURL = 'http://localhost:5000/player/';
@@ -106,6 +107,7 @@ getEnemy().then(enemies => {
             //create card
             const enemyCard = document.createElement('div')
             enemyCard.classList.add('enemy_card')
+            enemyCard.classList.add(`${enemy.name}`)
             // create img element
             const enemyImg = document.createElement('img')// add later
             enemyImg.classList.add('enemy_img')
@@ -140,9 +142,9 @@ getEnemy().then(enemies => {
 
             cardContainer.appendChild(enemyCard)
 
+
             enemyCard.addEventListener('click', function(){
                 selectedMonster = enemy.name
-
             }
         )
         })
@@ -175,6 +177,8 @@ async function playerAttack(enemyName, playerWord) {
         throw error;
     }
 }
+
+
 
 async function enemyAttack(params) {
     
