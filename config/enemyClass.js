@@ -1,7 +1,7 @@
 const Entity = require("../classes/entities/config/entityClass")
 
 class Enemy extends Entity {
-    constructor(health = 10, attack = 10, weakness = "") {
+    constructor(health = 10, attack = 1, weakness = "") {
         super(health, attack);
         this.weakness = weakness;
     }

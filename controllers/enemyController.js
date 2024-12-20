@@ -1,9 +1,10 @@
 const Enemy = require("../config/enemyClass");
+const { checkWord } = require("../utils/wordChecker");
 
-class EnemyController{
-    constructor(){
-        this.enemies = {}
-    };
+class EnemyController {
+    constructor() {
+        this.enemies = {};
+    }
 
     createEnemy(name, health = 10, attack = 1, weakness = "") {
         if (this.enemies[name]) {
@@ -12,7 +13,7 @@ class EnemyController{
         const enemy = new Enemy(health, attack, weakness);
         this.enemies[name] = enemy;
         return enemy;
-    };
+    }
 
     findEnemyByName(name) {
         const enemy = this.enemies[name];
@@ -20,46 +21,56 @@ class EnemyController{
             throw new Error("Enemy not found.");
         }
         return enemy;
-    };
+    }
 
-    damageEnemy(name, amount, attackType = "") {
+    damageEnemyWithWord(name, word) {
         const enemy = this.findEnemyByName(name);
-        enemy.takeDamage(amount, attackType);
-        return enemy;
-    };
+        const { damage, isValidWord, category } = checkWord(word);
 
-    healEnemy(name, amount){
+        if (isValidWord) {
+            if (category === enemy.weakness) {
+                enemy.takeDamage(damage * 2, category); // Apply double damage for weakness
+            } else {
+                enemy.takeDamage(damage, category); // Apply normal damage
+            }
+        } else {
+            enemy.healDamage(damage); // Heal enemy for invalid word
+        }
+
+        return { enemy, damage, isValidWord, category };
+    }
+
+    healEnemy(name, amount) {
         const enemy = this.findEnemyByName(name);
         enemy.healDamage(amount);
-        return enemy
-    };
+        return enemy;
+    }
 
     enemyAttackPlayer(name, player) {
         const enemy = this.findEnemyByName(name);
         enemy.attackPlayer(player);
         return { enemy, player };
-    };
+    }
 
     checkEnemyDeath(name) {
         const enemy = this.findEnemyByName(name);
         return enemy.checkDeathCondition();
-    };
+    }
 
     checkEnemyWin(name, player) {
         const enemy = this.findEnemyByName(name);
         return enemy.checkWinCondition(player);
-    };
+    }
 
     getAllEnemies() {
         return Object.values(this.enemies);
-    };
+    }
 
     removeEnemy(name) {
         const enemy = this.findEnemyByName(name);
         delete this.enemies[name];
         return enemy;
-    };
-
-};
+    }
+}
 
 module.exports = new EnemyController();
