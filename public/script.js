@@ -33,6 +33,8 @@ const monsters = [
     "https://robohash.org/VVN.png?set=set2&size=150x150"
 ]
 let imgIndex = 0
+let clickedMonster
+
 // Fetch enemies from the API
 const getEnemy = async () => {
     try {
@@ -91,9 +93,6 @@ const checkEnemyAlive = async () => {
     });
 };
 
-// Run checkEnemyAlive every 500ms
-setInterval(checkEnemyAlive, 500);
-
 // Initialize by rendering enemies
 renderEnemies();
 
@@ -112,15 +111,34 @@ const getPlayer = async () => {
     }
 };
 
-const getPlayerHP = async () => {
-    const player = await getPlayer()
-    console.log(player);
-};
-
-getPlayerHP();
-
 let playerWord = ''
 
+const getPlayerHP = async () => {
+    const players = await getPlayer()
+    const player = players[0]
+    if (!player) return;
+    playerHealth.textContent += ' ' + player.health;
+};
+
+const getPlayerScore = async () => {
+    const players = await getPlayer()
+    const player = players[0]
+    if (!player) return;
+    playerXP.textContent += ' ' + player.score;
+}
+const getSpell = () => {
+    playerWord = spellInput.value
+    return playerWord
+};
+
+
+getPlayerHP();
+getPlayerScore();
+
+
+
+// Categories
+// Fetch categories from the API
 const getCategories = () => {
 
     return fetch(catApiUrl)
@@ -178,8 +196,10 @@ getCategories().then(categories => {
 
 
 
-async function playerAttack(enemyName, playerWord) {
+async function playerAttack(enemyName) {
     try {
+        const playerWord = getSpell();
+
         const response = await fetch(`${enemiesApiUrl}/${enemyName}/damage`, {
             method: 'PATCH',
             headers: {
@@ -205,12 +225,22 @@ async function playerAttack(enemyName, playerWord) {
 //Event Listeners
 spellBtn.addEventListener('click', function(event){
     event.preventDefault()
-    playerWord = spellInput.value
+    
     spellInput.value = ''
     console.log(playerWord);
 });
 
 cardContainer.addEventListener('click', function(event) {
+    const clickedCard = event.target.closest('.enemy_card');
+    if (clickedCard) {
+        const clickedMonster = clickedCard.classList[1];
+        console.log("Clicked Monster:", clickedMonster);
+    }
     monsterSection.style.display = "none";
     battleSection.style.display = "block";
 });
+
+
+// Intervals
+// Run every 500ms
+setInterval(( checkEnemyAlive ), 500);
