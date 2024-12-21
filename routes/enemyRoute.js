@@ -45,14 +45,22 @@ router.patch("/:name/heal", (req, res) => {
 
 router.post("/:name/attack", (req, res) => {
     const { playerName } = req.body;
+
     try {
+        // Validate player
         const player = playerController.findPlayerByName(playerName);
+        if (!player) {
+            throw new Error(`Player ${playerName} not found.`);
+        }
+
+        // Perform enemy attack
         const result = enemyController.enemyAttackPlayer(req.params.name, player);
         res.status(200).json({ message: "Enemy attacked player", result });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 });
+
 
 router.get("/:name/death", (req, res) => {
     try {

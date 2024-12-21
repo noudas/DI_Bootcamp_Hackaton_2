@@ -48,7 +48,14 @@ class EnemyController {
 
     enemyAttackPlayer(name, player) {
         const enemy = this.findEnemyByName(name);
+        if (!enemy) {
+            throw new Error(`Enemy ${name} not found.`);
+        }
+    
+        // Perform attack
         enemy.attackPlayer(player);
+    
+        // Return enemy and updated player state
         return { enemy, player };
     }
 

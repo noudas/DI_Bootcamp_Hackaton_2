@@ -253,7 +253,7 @@ const checkEnemyAliveBattle = async () => {
                 battleCard.remove(); // Remove the battle card
                 console.log(`Enemy ${enemy.name} has been defeated!`);
                 setTimeout(() => {
-                    winMessage()
+                    enemyKilled()
                 }, 1000);
             }
         }
@@ -262,7 +262,7 @@ const checkEnemyAliveBattle = async () => {
     }
 };
 
-const winMessage = () => {
+const enemyKilled = () => {
     // Create a container for the win message
     const messageContainer = document.createElement("div");
     messageContainer.classList.add("win-message");
@@ -301,6 +301,55 @@ const winMessage = () => {
     messageContainer.style.borderRadius = "10px";
 };
 
+const enemyAttack = async () => {
+    try {
+        const enemies = await getEnemy();
+        if (!enemies) {
+            console.warn("No enemies available.");
+            return;
+        }
+
+        const players = await getPlayer();
+        const player = players[0];
+        if (!player) {
+            console.warn("No player found.");
+            return;
+        }
+        const playerName = player.name
+
+        const enemy = enemies.find(e => e.name === clickedMonster);
+        if (!enemy) {
+            console.warn(`Enemy ${clickedMonster} not found.`);
+            return;
+        }
+
+        // Simulate the enemy's attack on the player
+        const response = await fetch(`/enemy/${enemy.name}/attack`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ playerName: playerName }),
+        });
+        console.log("Response ",response);
+        
+
+        const result = await response.json();
+        console.log("Result ",result);
+        
+        if (response.ok) {
+            console.log(`Enemy ${enemy.name} attacked:`, result);
+            const playerHealthElement = document.querySelector(".player_health");
+            if (playerHealthElement) {
+                playerHealthElement.textContent = `Health: ${result.result.player.health}`;
+            }
+        } else {
+            console.error("Enemy attack failed:", result.error);
+        }
+    } catch (error) {
+        console.error("Error in enemy attack:", error);
+    }
+};
 
 
 //Event Listeners
@@ -309,6 +358,7 @@ spellBtn.addEventListener('click', function(event){
     getPlayerHP();
     getPlayerScore();
     playerAttack(clickedMonster)
+    console.log("Enemy Attack: ",enemyAttack());
     spellInput.value = ''
 });
 
@@ -328,4 +378,6 @@ cardContainer.addEventListener('click', function(event) {
 
 // Intervals
 // Run every 200ms
+checkEnemyAlive();
+checkEnemyAliveBattle();
 setInterval(( checkEnemyAlive, checkEnemyAliveBattle ), 200);
