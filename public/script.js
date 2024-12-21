@@ -393,18 +393,8 @@ const enemyKilled = () => {
 
     // Add the win message to the DOM
     document.body.appendChild(messageContainer);
-
-    // Optionally style the message for better visibility
-    messageContainer.style.position = "fixed";
-    messageContainer.style.top = "50%";
-    messageContainer.style.left = "50%";
-    messageContainer.style.transform = "translate(-50%, -50%)";
-    messageContainer.style.padding = "20px";
-    messageContainer.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
-    messageContainer.style.color = "white";
-    messageContainer.style.textAlign = "center";
-    messageContainer.style.borderRadius = "10px";
 };
+
 
 const enemyAttack = async () => {
     try {

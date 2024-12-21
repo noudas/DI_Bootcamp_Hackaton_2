@@ -147,8 +147,9 @@ button:active {
     justify-content: center;
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 40px;
     gap: 10px;
+    user-select: none;
 }
 
 #word_table th, #word_table td {
@@ -185,4 +186,20 @@ button:active {
 
 #word_table tbody td {
     text-align: center; /* Ensure words are centered in the cells */
+}
+
+/* Styling for the win message container */
+.win-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: var(--woodbrown);
+    color: var(--woodbrighthighlight);
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px var(--shadow_woodbrown), 0 8px 16px var(--woodhighlight);
+    font-family: "MedievalSharp", serif;
+    font-size: 24px;
 }
