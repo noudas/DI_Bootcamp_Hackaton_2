@@ -252,6 +252,8 @@ const checkEnemyAliveBattle = async () => {
             if (battleCard) {
                 battleCard.remove(); // Remove the battle card
                 console.log(`Enemy ${enemy.name} has been defeated!`);
+                monsterSection.style.display = "block";
+                battleSection.style.display = "none";
             }
         }
     } catch (error) {
@@ -265,7 +267,6 @@ spellBtn.addEventListener('click', function(event){
     event.preventDefault()
     getPlayerHP();
     getPlayerScore();
-    checkEnemyAliveBattle()
     playerAttack(clickedMonster)
     spellInput.value = ''
 });
@@ -286,4 +287,4 @@ cardContainer.addEventListener('click', function(event) {
 
 // Intervals
 // Run every 500ms
-setInterval(( checkEnemyAlive ), 500);
+setInterval(( checkEnemyAlive, checkEnemyAliveBattle ), 200);
