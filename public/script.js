@@ -3,6 +3,7 @@
 // Document Related
 const wordTable = document.getElementById("word_table");
 const spellForm = document.getElementById("spell_form");
+const toggleCategoriesButton = document.getElementById('toggle_categories');
 
 // Player Related
 const playerHealth = document.getElementById("player_health");
@@ -437,11 +438,11 @@ const getEnemyHP = async () => {
 };
 
 
-
 //Event Listeners
 spellBtn.addEventListener('click', function(event){
-    event.preventDefault()
-    playerAttack(clickedMonster)
+    event.preventDefault();
+    playerAttack(clickedMonster);
+    enemyAttack();
     spellInput.value = ''
     setInterval(() => {
         getPlayerHP();
@@ -463,11 +464,16 @@ cardContainer.addEventListener('click', function(event) {
     battleSection.style.display = "block";
 });
 
+toggleCategoriesButton.addEventListener('click', () => {
+    if (wordTable.style.display === 'none') {
+        wordTable.style.display = 'block'; // Show table
+    } else {
+        wordTable.style.display = 'none'; // Hide table
+    }
+});
+
 
 // Intervals
 // Run every 200ms
 checkEnemyAlive();
 setInterval(( checkEnemyAlive, checkEnemyAliveBattle ), 400);
-
-
-// Reduce the code tomorrow
