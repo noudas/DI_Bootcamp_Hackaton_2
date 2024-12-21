@@ -117,24 +117,20 @@ const getPlayerHP = async () => {
     const players = await getPlayer()
     const player = players[0]
     if (!player) return;
-    playerHealth.textContent += ' ' + player.health;
+    playerHealth.textContent = 'Health: ' + player.health;
 };
 
 const getPlayerScore = async () => {
     const players = await getPlayer()
     const player = players[0]
     if (!player) return;
-    playerXP.textContent += ' ' + player.score;
+    playerXP.textContent = 'XP: ' + player.score;
 }
 const getSpell = () => {
     playerWord = spellInput.value
     console.log(playerWord);
     return playerWord
 };
-
-
-getPlayerHP();
-getPlayerScore();
 
 
 
@@ -206,6 +202,7 @@ async function generateEnemy(clickedMonster) {
         const enemy = enemies.find(e => e.name === clickedMonster);
         if (enemy) {
             const enemyCard = createEnemyCard(enemy);
+            enemyCard.classList.add(`battle${enemy.name}`)
 
             battleSection.appendChild(enemyCard);
         } else {
@@ -241,10 +238,34 @@ async function playerAttack(enemyName) {
     }
 };
 
+const checkEnemyAliveBattle = async () => {
+    try {
+        const enemies = await getEnemy();
+        if (!enemies) return;
+
+        // Find the currently battled enemy
+        const enemy = enemies.find(e => e.name === clickedMonster);
+
+        // Check if the enemy exists and has met the lose condition
+        if (enemy && enemy.attributes.lose_condition) {
+            const battleCard = document.querySelector(`.${enemy.name}`);
+            if (battleCard) {
+                battleCard.remove(); // Remove the battle card
+                console.log(`Enemy ${enemy.name} has been defeated!`);
+            }
+        }
+    } catch (error) {
+        console.error("Error checking enemy status in battle:", error);
+    }
+};
+
 
 //Event Listeners
 spellBtn.addEventListener('click', function(event){
     event.preventDefault()
+    getPlayerHP();
+    getPlayerScore();
+    checkEnemyAliveBattle()
     playerAttack(clickedMonster)
     spellInput.value = ''
 });
@@ -254,6 +275,8 @@ cardContainer.addEventListener('click', function(event) {
     if (clickedCard) {
         clickedMonster = clickedCard.classList[1];
         generateEnemy(clickedMonster)
+        getPlayerHP();
+        getPlayerScore();
         console.log("Clicked Monster:", clickedMonster);
     }
     monsterSection.style.display = "none";
