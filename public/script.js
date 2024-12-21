@@ -339,19 +339,21 @@ const enemyAttack = async () => {
         const result = await response.json();
         console.log("Result ", result);
 
-        if (result.success) {
+        if (result.message && result.message.includes('attacked')) {
             console.log(`Enemy ${enemy.name} attacked:`, result);
             const playerHealthElement = document.querySelector(".player_health");
             if (playerHealthElement) {
-                playerHealthElement.textContent = `Health: ${result.player.health}`;
+                playerHealthElement.textContent = `Health: ${result.result.player.health}`;
             }
         } else {
-            console.error("Enemy attack failed:", result.error);
+            console.error("Enemy attack failed:", result.error || "Unknown error");
         }
     } catch (error) {
         console.error("Error in enemy attack:", error);
     }
 };
+
+
 
 
 //Event Listeners
