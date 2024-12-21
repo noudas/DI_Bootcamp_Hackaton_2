@@ -279,7 +279,7 @@ async function generateEnemy(clickedMonster) {
     }
 }
 
-async function playerAttack(enemyName) {
+const playerAttack = async (enemyName) => {
     try {
         const playerWord = getSpell();
 
@@ -296,12 +296,22 @@ async function playerAttack(enemyName) {
         }
 
         const data = await response.json();
+        console.log("battledata",data);
+        updateBattleLog(`You cast a spell: ${playerWord}`);
+        if(data.enemy.isValidWord){
+            updateBattleLog(`${enemyName} took of damage!`);
+        } else {
+            updateBattleLog(`You casted the spell wrong! ${enemyName} Healed!`);
+        }
+
         return data;
     } catch (error) {
         console.error('Error in playerAttack:', error.message);
+        updateBattleLog('Player attack failed!');
         throw error;
     }
 };
+
 
 async function increasePlayerScore() {
     try {
@@ -368,33 +378,29 @@ const checkEnemyAliveBattle = async () => {
 };
 
 const enemyKilled = () => {
-    // Create a container for the win message
+    // Add message to the battle log
+    updateBattleLog(`You killed ${clickedMonster}!`);
+    
+    // Existing win message display logic
     const messageContainer = document.createElement("div");
     messageContainer.classList.add("win-message");
 
-    // Create the win text
     const messageText = document.createElement("h2");
     messageText.textContent = "You killed the enemy!";
 
-    // Optionally, create a button to return to the main menu or restart the battle
     const restartButton = document.createElement("button");
     restartButton.textContent = "Continue";
     restartButton.classList.add("restart-button");
     restartButton.addEventListener("click", () => {
-        // Reset battle and navigate back to the main screen
         messageContainer.remove();
         monsterSection.style.display = "flex";
         battleSection.style.display = "none";
     });
 
-    // Append text and button to the container
     messageContainer.appendChild(messageText);
     messageContainer.appendChild(restartButton);
-
-    // Add the win message to the DOM
     document.body.appendChild(messageContainer);
 };
-
 
 const enemyAttack = async () => {
     try {
@@ -432,10 +438,10 @@ const enemyAttack = async () => {
         }
 
         const result = await response.json();
-        console.log("Result ", result);
 
         if (result.message && result.message.includes('attacked')) {
             console.log(`Enemy ${enemy.name} attacked:`, result);
+            updateBattleLog(`${enemy.name} attacks!`);
             const playerHealthElement = document.querySelector(".player_health");
             if (playerHealthElement) {
                 playerHealthElement.textContent = `Health: ${result.result.player.health}`;
@@ -472,6 +478,18 @@ const getEnemyHP = async () => {
     } catch (error) {
         console.error("Error in enemy get HP:", error);
     }
+};
+
+const updateBattleLog = (message) => {
+    const battleLog = document.getElementById("BattleLogs");
+
+    // Create a new log entry
+    const logEntry = document.createElement("p");
+    logEntry.textContent = message;
+    battleLog.appendChild(logEntry);
+
+    // Scroll to the bottom of the log
+    battleLog.scrollTop = battleLog.scrollHeight;
 };
 
 
