@@ -276,7 +276,6 @@ async function generateEnemy(clickedMonster) {
     }
 }
 
-
 async function playerAttack(enemyName) {
     try {
         const playerWord = getSpell();
