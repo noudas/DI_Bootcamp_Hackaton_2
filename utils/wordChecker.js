@@ -1,14 +1,24 @@
 const { categories } = require('../config/data.js');
 
 function checkWord(word) {
+    word = word.toLowerCase(); // Convert the input word to lowercase
+    
     for (const category in categories) {
         const categoryWords = categories[category];
         
-        
-        if (categoryWords.includes(word)) {
-            const wordLength = word.length;
-            const damage = calculateDamage(wordLength);
-            return { damage, isValidWord: true, category }; // Word found, return result
+        if (Array.isArray(categoryWords)) {
+            if (categoryWords.some(w => w.toLowerCase() === word)) {
+                const wordLength = word.length;
+                const damage = calculateDamage(wordLength);
+                return { damage, isValidWord: true, category };
+            }
+        } else if (typeof categoryWords === 'object') {
+            const keys = Object.keys(categoryWords);
+            if (keys.some(k => k.toLowerCase() === word)) {
+                const wordLength = word.length;
+                const damage = calculateDamage(wordLength);
+                return { damage, isValidWord: true, category };
+            }
         }
     }
 
@@ -17,7 +27,6 @@ function checkWord(word) {
     const damage = calculateDamage(wordLength);
     return { damage, isValidWord: false };
 }
-
 
 function calculateDamage(wordLength) {
     if (wordLength >= 3 && wordLength <= 5) return 1;
