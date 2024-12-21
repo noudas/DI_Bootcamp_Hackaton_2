@@ -315,7 +315,7 @@ const enemyAttack = async () => {
             console.warn("No player found.");
             return;
         }
-        const playerName = player.name
+        const playerName = player.name;
 
         const enemy = enemies.find(e => e.name === clickedMonster);
         if (!enemy) {
@@ -324,24 +324,26 @@ const enemyAttack = async () => {
         }
 
         // Simulate the enemy's attack on the player
-        const response = await fetch(`/enemy/${enemy.name}/attack`, {
+        const response = await fetch(`/enemies/${enemy.name}/attack`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ playerName: playerName }),
         });
-        console.log("Response ",response);
-        
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
         const result = await response.json();
-        console.log("Result ",result);
-        
-        if (response.ok) {
+        console.log("Result ", result);
+
+        if (result.success) {
             console.log(`Enemy ${enemy.name} attacked:`, result);
             const playerHealthElement = document.querySelector(".player_health");
             if (playerHealthElement) {
-                playerHealthElement.textContent = `Health: ${result.result.player.health}`;
+                playerHealthElement.textContent = `Health: ${result.player.health}`;
             }
         } else {
             console.error("Enemy attack failed:", result.error);
@@ -355,8 +357,6 @@ const enemyAttack = async () => {
 //Event Listeners
 spellBtn.addEventListener('click', function(event){
     event.preventDefault()
-    getPlayerHP();
-    getPlayerScore();
     playerAttack(clickedMonster)
     console.log("Enemy Attack: ",enemyAttack());
     spellInput.value = ''
@@ -380,4 +380,6 @@ cardContainer.addEventListener('click', function(event) {
 // Run every 200ms
 checkEnemyAlive();
 checkEnemyAliveBattle();
-setInterval(( checkEnemyAlive, checkEnemyAliveBattle ), 200);
+getPlayerHP();
+getPlayerScore();
+setInterval(( checkEnemyAlive, checkEnemyAliveBattle, getPlayerHP, getPlayerScore ), 200);
