@@ -252,14 +252,55 @@ const checkEnemyAliveBattle = async () => {
             if (battleCard) {
                 battleCard.remove(); // Remove the battle card
                 console.log(`Enemy ${enemy.name} has been defeated!`);
-                monsterSection.style.display = "block";
-                battleSection.style.display = "none";
+                setTimeout(() => {
+                    winMessage()
+                }, 1000);
             }
         }
     } catch (error) {
         console.error("Error checking enemy status in battle:", error);
     }
 };
+
+const winMessage = () => {
+    // Create a container for the win message
+    const messageContainer = document.createElement("div");
+    messageContainer.classList.add("win-message");
+
+    // Create the win text
+    const messageText = document.createElement("h2");
+    messageText.textContent = "You killed the enemy!";
+
+    // Optionally, create a button to return to the main menu or restart the battle
+    const restartButton = document.createElement("button");
+    restartButton.textContent = "Continue";
+    restartButton.classList.add("restart-button");
+    restartButton.addEventListener("click", () => {
+        // Reset battle and navigate back to the main screen
+        messageContainer.remove();
+        monsterSection.style.display = "block";
+        battleSection.style.display = "none";
+    });
+
+    // Append text and button to the container
+    messageContainer.appendChild(messageText);
+    messageContainer.appendChild(restartButton);
+
+    // Add the win message to the DOM
+    document.body.appendChild(messageContainer);
+
+    // Optionally style the message for better visibility
+    messageContainer.style.position = "fixed";
+    messageContainer.style.top = "50%";
+    messageContainer.style.left = "50%";
+    messageContainer.style.transform = "translate(-50%, -50%)";
+    messageContainer.style.padding = "20px";
+    messageContainer.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+    messageContainer.style.color = "white";
+    messageContainer.style.textAlign = "center";
+    messageContainer.style.borderRadius = "10px";
+};
+
 
 
 //Event Listeners
@@ -286,5 +327,5 @@ cardContainer.addEventListener('click', function(event) {
 
 
 // Intervals
-// Run every 500ms
+// Run every 200ms
 setInterval(( checkEnemyAlive, checkEnemyAliveBattle ), 200);
