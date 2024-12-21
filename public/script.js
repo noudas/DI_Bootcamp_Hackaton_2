@@ -406,6 +406,7 @@ const enemyAttack = async () => {
 
 
 
+
 //Event Listeners
 spellBtn.addEventListener('click', function(event){
     event.preventDefault()
