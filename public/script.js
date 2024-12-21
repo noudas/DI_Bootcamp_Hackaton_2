@@ -221,9 +221,53 @@ async function generateEnemy(clickedMonster) {
         const enemy = enemies.find(e => e.name === clickedMonster);
         if (enemy) {
             const enemyCard = createEnemyCard(enemy);
-            enemyCard.classList.add(`battle${enemy.name}`)
+            enemyCard.classList.add(`battle${enemy.name}`);
 
+            // Append enemy card to the battle section
             battleSection.appendChild(enemyCard);
+
+            // Create categories and append them below the enemy card
+            const categories = await getCategories();
+            if (categories) {
+                const wordTable = document.getElementById('word_table');
+                if (wordTable) {
+                    wordTable.style.display = 'block'; // Ensure categories are visible
+                    wordTable.innerHTML = ''; // Clear existing categories (if any)
+                    
+                    Object.keys(categories).forEach(categoryName => {
+                        const tHead = document.createElement('thead');
+                        const tRow = document.createElement('tr');
+                        const tH = document.createElement('th');
+                        tH.innerHTML = `<strong>${categoryName}</strong>`;
+                        tRow.appendChild(tH);
+                        tHead.appendChild(tRow);
+                        wordTable.appendChild(tHead);
+
+                        const tBody = document.createElement('tbody');
+                        const columnCount = 5;
+                        const words = categories[categoryName];
+                        const rowCount = Math.ceil(words.length / columnCount);
+
+                        for (let row = 0; row < rowCount; row++) {
+                            const tRowBody = document.createElement('tr');
+                            for (let col = 0; col < columnCount; col++) {
+                                const index = row * columnCount + col;
+                                if (index < words.length) {
+                                    const tD = document.createElement('td');
+                                    tD.textContent = words[index];
+                                    tRowBody.appendChild(tD);
+                                }
+                            }
+                            tBody.appendChild(tRowBody);
+                        }
+
+                        wordTable.appendChild(tBody);
+                    });
+                    
+                    // Append categories table to the battle section
+                    battleSection.appendChild(wordTable);
+                }
+            }
         } else {
             console.error(`Enemy with name "${clickedMonster}" not found.`);
         }
@@ -231,6 +275,7 @@ async function generateEnemy(clickedMonster) {
         console.error("Error generating enemy:", error);
     }
 }
+
 
 async function playerAttack(enemyName) {
     try {
