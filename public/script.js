@@ -123,7 +123,6 @@ const getPlayerHP = async () => {
 const getPlayerScore = async () => {
     try {
         const players = await getPlayer();
-        console.log('Players:', players); // Debug log
         
         if (players.length === 0) {
             console.warn('No players found');
@@ -136,11 +135,8 @@ const getPlayerScore = async () => {
             return;
         }
         
-        console.log('Player Score:', player.score); // Debug log
-        
         if (playerXP) {
             playerXP.textContent = 'XP: ' + player.score;
-            console.log('Updated XP display'); // Debug log
         } else {
             console.error('playerXP element not found');
         }
@@ -151,7 +147,6 @@ const getPlayerScore = async () => {
 
 const getSpell = () => {
     playerWord = spellInput.value
-    console.log(playerWord);
     return playerWord
 };
 
@@ -253,7 +248,6 @@ async function playerAttack(enemyName) {
         }
 
         const data = await response.json();
-        console.log('Enemy damaged:', data);
         return data;
     } catch (error) {
         console.error('Error in playerAttack:', error.message);
@@ -268,13 +262,25 @@ async function increasePlayerScore() {
         const player = players[0];
         if (!player) return;
 
-        player.score = player.score + 1;
-        console.log(`Player score increased to ${player.score}`);
+        const updatedScore = player.score + 1;
+
+        // PATCH request to update the score on the backend
+        const response = await fetch(`${playerAPIURL}${player.name}/score`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ points: 1 }) // Assuming the backend increments the score
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to update score: ${response.status}`);
+        }
 
         // Update the UI with the new score
         const playerXPElement = document.getElementById("player_XP");
         if (playerXPElement) {
-            playerXPElement.textContent = `XP: ${player.score}`;
+            playerXPElement.textContent = `XP: ${updatedScore}`;
         } else {
             console.warn("Player XP element not found in the DOM");
         }
@@ -283,6 +289,7 @@ async function increasePlayerScore() {
     }
 }
 
+let processedEnemies = new Set();
 const checkEnemyAliveBattle = async () => {
     try {
         const enemies = await getEnemy();
@@ -291,8 +298,8 @@ const checkEnemyAliveBattle = async () => {
         // Find the currently battled enemy
         const enemy = enemies.find(e => e.name === clickedMonster);
 
-        // Check if the enemy exists and has met the lose condition
-        if (enemy && enemy.attributes.lose_condition) {
+        if (enemy && enemy.attributes.lose_condition && !processedEnemies.has(enemy.name)) {
+            processedEnemies.add(enemy.name); // Mark as processed
             const battleCard = document.querySelector(`.${enemy.name}`);
             if (battleCard) {
                 battleCard.remove(); // Remove the battle card
@@ -403,7 +410,31 @@ const enemyAttack = async () => {
     }
 };
 
+const getEnemyHP = async () => {
+    try {
+        const enemies = await getEnemy();
+        if (!enemies) {
+            console.warn("No enemies available.");
+            return;
+        }
+        
+        const enemy = enemies.find(e => e.name === clickedMonster);
+        if (!enemy) {
+            console.warn(`Enemy ${clickedMonster} not found.`);
+            return;
+        }
 
+        const enemyHealth = document.querySelector(`.battle${clickedMonster} .enemy_health`);
+        if (enemyHealth && enemyHealth.parentNode) {
+            enemyHealth.textContent = 'Health: ' + enemy.attributes.health;
+        } else {
+            console.warn("Enemy health element not found.");
+        }
+
+    } catch (error) {
+        console.error("Error in enemy get HP:", error);
+    }
+};
 
 
 
@@ -411,11 +442,11 @@ const enemyAttack = async () => {
 spellBtn.addEventListener('click', function(event){
     event.preventDefault()
     playerAttack(clickedMonster)
-    console.log("Enemy Attack: ",enemyAttack());
     spellInput.value = ''
     setInterval(() => {
         getPlayerHP();
         getPlayerScore();
+        getEnemyHP();
     }, 300);
 });
 
@@ -436,8 +467,7 @@ cardContainer.addEventListener('click', function(event) {
 // Intervals
 // Run every 200ms
 checkEnemyAlive();
-checkEnemyAliveBattle();
-setInterval(( checkEnemyAlive, checkEnemyAliveBattle ), 200);
+setInterval(( checkEnemyAlive, checkEnemyAliveBattle ), 400);
 
 
 // Reduce the code tomorrow
