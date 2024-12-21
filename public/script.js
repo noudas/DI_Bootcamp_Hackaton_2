@@ -268,7 +268,7 @@ async function increasePlayerScore() {
         const player = players[0];
         if (!player) return;
 
-        player.score += 1;
+        player.score = player.score + 1;
         console.log(`Player score increased to ${player.score}`);
 
         // Update the UI with the new score
