@@ -1,7 +1,8 @@
-const Enemy = require("../config/enemyClass");
-const { checkWord } = require("../utils/wordChecker");
+import {Enemy} from "../config/enemyClass.js";
+import { checkWord }  from "../utils/wordChecker.js";
 
-class EnemyController {
+
+ class EnemyController {
     constructor() {
         this.enemies = {};
     }
@@ -80,4 +81,4 @@ class EnemyController {
     }
 }
 
-module.exports = new EnemyController();
+export default new EnemyController();

@@ -1,6 +1,6 @@
-const Entity = require("./entityClass")
+import {Entity} from "./entityClass.js";
 
-class Player extends Entity {
+export class Player extends Entity {
     constructor(health = 10, attack = 1, score = 0){
         super(health, attack);
         this.score = score; 
@@ -26,4 +26,3 @@ class Player extends Entity {
 
 }
 
-module.exports = Player;

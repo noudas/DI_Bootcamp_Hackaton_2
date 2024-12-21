@@ -441,3 +441,6 @@ setInterval(( checkEnemyAlive, checkEnemyAliveBattle ), 200);
 
 
 // Reduce the code tomorrow
+
+
+

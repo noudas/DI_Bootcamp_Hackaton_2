@@ -1,6 +1,6 @@
-const { categories } = require('../config/data.js');
+import { categories } from "../config/data.js";
 
-function checkWord(word) {
+export function checkWord(word) {
     for (const category in categories) {
         const categoryWords = categories[category];
         
@@ -26,7 +26,7 @@ function calculateDamage(wordLength) {
     return 0;
 }
 
-module.exports = { checkWord };
+
 
 // console.log(checkWord("French fries"))
 // console.log(checkWord("Cum toast"))

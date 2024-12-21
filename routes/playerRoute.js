@@ -1,6 +1,7 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const playerController = require("../controllers/playerController");
+import playerController from "../controllers/playerController.js";
+// const playerController= new PlayerController();
 
 router.get("/", (req,res) => {
     try {
@@ -84,4 +85,4 @@ router.get("/:name/death", (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;
