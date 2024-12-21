@@ -128,6 +128,7 @@ const getPlayerScore = async () => {
 }
 const getSpell = () => {
     playerWord = spellInput.value
+    console.log(playerWord);
     return playerWord
 };
 
@@ -195,6 +196,25 @@ getCategories().then(categories => {
 
 
 
+// Battle ARENA!
+async function generateEnemy(clickedMonster) {
+    try {
+        const enemies = await getEnemy();
+        if (!enemies) return;
+
+        // Find the specific enemy based on the clickedMonster
+        const enemy = enemies.find(e => e.name === clickedMonster);
+        if (enemy) {
+            const enemyCard = createEnemyCard(enemy);
+
+            battleSection.appendChild(enemyCard);
+        } else {
+            console.error(`Enemy with name "${clickedMonster}" not found.`);
+        }
+    } catch (error) {
+        console.error("Error generating enemy:", error);
+    }
+}
 
 async function playerAttack(enemyName) {
     try {
@@ -225,15 +245,15 @@ async function playerAttack(enemyName) {
 //Event Listeners
 spellBtn.addEventListener('click', function(event){
     event.preventDefault()
-    
+    playerAttack(clickedMonster)
     spellInput.value = ''
-    console.log(playerWord);
 });
 
 cardContainer.addEventListener('click', function(event) {
     const clickedCard = event.target.closest('.enemy_card');
     if (clickedCard) {
-        const clickedMonster = clickedCard.classList[1];
+        clickedMonster = clickedCard.classList[1];
+        generateEnemy(clickedMonster)
         console.log("Clicked Monster:", clickedMonster);
     }
     monsterSection.style.display = "none";
