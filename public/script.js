@@ -439,23 +439,20 @@ const getEnemyHP = async () => {
 
 
 //Event Listeners
-spellBtn.addEventListener('click', function(event){
+spellBtn.addEventListener('click', async function(event) {
     event.preventDefault();
-    playerAttack(clickedMonster);
-    enemyAttack();
-    spellInput.value = ''
-    setInterval(() => {
-        getPlayerHP();
-        getPlayerScore();
-        getEnemyHP();
-    }, 300);
+    await playerAttack(clickedMonster);
+    await enemyAttack();
+    spellInput.value = '';
 });
+
+
 
 cardContainer.addEventListener('click', function(event) {
     const clickedCard = event.target.closest('.enemy_card');
     if (clickedCard) {
         clickedMonster = clickedCard.classList[1];
-        generateEnemy(clickedMonster)
+        generateEnemy(clickedMonster);
         getPlayerHP();
         getPlayerScore();
         console.log("Clicked Monster:", clickedMonster);
@@ -476,4 +473,10 @@ toggleCategoriesButton.addEventListener('click', () => {
 // Intervals
 // Run every 200ms
 checkEnemyAlive();
-setInterval(( checkEnemyAlive, checkEnemyAliveBattle ), 400);
+setInterval(() => {
+    checkEnemyAlive();
+    checkEnemyAliveBattle();
+    getPlayerHP();
+    getPlayerScore();
+    getEnemyHP();
+}, 400);
