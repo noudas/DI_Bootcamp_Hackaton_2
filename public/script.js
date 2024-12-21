@@ -55,10 +55,12 @@ const createEnemyCard = (enemy) => {
 
     enemyCard.innerHTML = `
         <img class="enemy_img" src="${monsters[imgIndex++]}" alt="${enemy.name}">
+        <div class="enemy_info">
         <h2 class="enemy_name">${enemy.name}</h2>
-        <p class="enemy_health">Health: ${enemy.attributes.health}</p>
-        <p class="enemy_attack">Attack: ${enemy.attributes.attack}</p>
-        <p class="enemy_weakness">Weakness: ${enemy.attributes.weakness}</p>
+        <p class="enemy_health"><strong>Health: </strong>${enemy.attributes.health}</p>
+        <p class="enemy_attack"><strong>Attack: </strong>${enemy.attributes.attack}</p>
+        <p class="enemy_weakness"><strong>Weakness: </strong>${enemy.attributes.weakness}</p>
+        </div>
     `;
 
     enemyCard.addEventListener('click', () => {
