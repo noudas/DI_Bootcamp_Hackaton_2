@@ -78,7 +78,7 @@ main {
 .enemy_card h2,
 .enemy_card p {
   font-family: sans-serif;
-  color: #303952;
+  color: black;
   text-align: left;
   margin: 5px 0;
   width: 100%;
@@ -90,7 +90,7 @@ main {
 
 .enemy_card p {
   font-size: 20px;
-  color: #666;
+  /* color: #666; */
   margin: 0;
 }
 .enemy_card:hover {

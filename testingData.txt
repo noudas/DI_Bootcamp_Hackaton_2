@@ -26,3 +26,20 @@
         "Savor"
     ]
 }
+
+
+//creating a player
+{
+    "name": "Player1",
+    "health": 100,
+    "attack": 25,
+    "score": 0
+}
+
+//creating as monster
+{
+  "name": "monster1",
+  "health": 5,
+  "attack": 2,
+  "weakness": "Food"
+}
