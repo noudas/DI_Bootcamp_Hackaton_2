@@ -121,11 +121,34 @@ const getPlayerHP = async () => {
 };
 
 const getPlayerScore = async () => {
-    const players = await getPlayer()
-    const player = players[0]
-    if (!player) return;
-    playerXP.textContent = 'XP: ' + player.score;
-}
+    try {
+        const players = await getPlayer();
+        console.log('Players:', players); // Debug log
+        
+        if (players.length === 0) {
+            console.warn('No players found');
+            return;
+        }
+        
+        const player = players[0];
+        if (!player) {
+            console.warn('First player is null or undefined');
+            return;
+        }
+        
+        console.log('Player Score:', player.score); // Debug log
+        
+        if (playerXP) {
+            playerXP.textContent = 'XP: ' + player.score;
+            console.log('Updated XP display'); // Debug log
+        } else {
+            console.error('playerXP element not found');
+        }
+    } catch (error) {
+        console.error('Error getting player score:', error);
+    }
+};
+
 const getSpell = () => {
     playerWord = spellInput.value
     console.log(playerWord);
@@ -238,6 +261,28 @@ async function playerAttack(enemyName) {
     }
 };
 
+async function increasePlayerScore() {
+    try {
+        const players = await getPlayer();
+        if (players.length === 0) return;
+        const player = players[0];
+        if (!player) return;
+
+        player.score += 1;
+        console.log(`Player score increased to ${player.score}`);
+
+        // Update the UI with the new score
+        const playerXPElement = document.getElementById("player_XP");
+        if (playerXPElement) {
+            playerXPElement.textContent = `XP: ${player.score}`;
+        } else {
+            console.warn("Player XP element not found in the DOM");
+        }
+    } catch (error) {
+        console.error("Error increasing player score:", error);
+    }
+}
+
 const checkEnemyAliveBattle = async () => {
     try {
         const enemies = await getEnemy();
@@ -252,8 +297,13 @@ const checkEnemyAliveBattle = async () => {
             if (battleCard) {
                 battleCard.remove(); // Remove the battle card
                 console.log(`Enemy ${enemy.name} has been defeated!`);
-                setTimeout(() => {
-                    enemyKilled()
+
+                // Increase player score
+                await increasePlayerScore();
+
+                // Delayed action
+                setTimeout(async () => {
+                    await enemyKilled();
                 }, 1000);
             }
         }
@@ -362,6 +412,10 @@ spellBtn.addEventListener('click', function(event){
     playerAttack(clickedMonster)
     console.log("Enemy Attack: ",enemyAttack());
     spellInput.value = ''
+    setInterval(() => {
+        getPlayerHP();
+        getPlayerScore();
+    }, 300);
 });
 
 cardContainer.addEventListener('click', function(event) {
@@ -382,6 +436,4 @@ cardContainer.addEventListener('click', function(event) {
 // Run every 200ms
 checkEnemyAlive();
 checkEnemyAliveBattle();
-getPlayerHP();
-getPlayerScore();
-setInterval(( checkEnemyAlive, checkEnemyAliveBattle, getPlayerHP, getPlayerScore ), 200);
+setInterval(( checkEnemyAlive, checkEnemyAliveBattle ), 200);
