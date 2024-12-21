@@ -438,3 +438,6 @@ cardContainer.addEventListener('click', function(event) {
 checkEnemyAlive();
 checkEnemyAliveBattle();
 setInterval(( checkEnemyAlive, checkEnemyAliveBattle ), 200);
+
+
+// Reduce the code tomorrow
