@@ -173,44 +173,45 @@ const getCategories = () => {
 };
 
 getCategories().then(categories => {
+    const wordTable = document.getElementById('word_table'); // Ensure this element exists in your HTML
+    
     if (categories) {
+        const tHead = document.createElement('thead');
+        const tRow = document.createElement('tr');
+        
+        // Create a header cell for each category
         Object.keys(categories).forEach(categoryName => {
-            const tHead = document.createElement('thead')
-            const tRow = document.createElement('tr')
-            const tH = document.createElement('th')
-
-            tH.innerHTML = `<strong>${categoryName}</strong>`
-            tRow.appendChild(tH)
-            tHead.appendChild(tRow)
-            wordTable.appendChild(tHead)
-
-            const tBody = document.createElement('tbody')
-            const columnCount = 5
-            const words = categories[categoryName]
-            const rowCount = Math.ceil(words.length / columnCount);
-
-
-
-            for (let row = 0; row < rowCount; row++) {
-                const tRowBody = document.createElement('tr')
-                for (let col = 0; col < columnCount; col++) {
-                    const index = row * columnCount + col
-                    if (index < words.length) {
-                        const tD = document.createElement('td')
-                        tD.textContent = words[index]
-                        tRowBody.appendChild(tD)
-                    }
-                }
-                tBody.appendChild(tRowBody)
-            }
-
-            wordTable.appendChild(tBody)
-
+            const tH = document.createElement('th');
+            tH.innerHTML = `<strong>${categoryName}</strong>`;
+            tRow.appendChild(tH);
         });
+        tHead.appendChild(tRow);
+        wordTable.appendChild(tHead);
+        
+        const tBody = document.createElement('tbody');
+        const rowCount = Math.max(...Object.values(categories).map(category => category.length)); // Find the maximum number of words in a category
+        
+        for (let row = 0; row < rowCount; row++) {
+            const tRowBody = document.createElement('tr');
+            
+            Object.keys(categories).forEach(categoryName => {
+                const words = categories[categoryName];
+                const tD = document.createElement('td');
+                
+                // Add word if it exists in this row, otherwise leave the cell empty
+                if (row < words.length) {
+                    tD.textContent = words[row];
+                }
+                
+                tRowBody.appendChild(tD);
+            });
+            
+            tBody.appendChild(tRowBody);
+        }
 
+        wordTable.appendChild(tBody);
     }
-})
-
+});
 
 
 // Battle ARENA!
@@ -233,7 +234,7 @@ async function generateEnemy(clickedMonster) {
             if (categories) {
                 const wordTable = document.getElementById('word_table');
                 if (wordTable) {
-                    wordTable.style.display = 'block'; // Ensure categories are visible
+                    wordTable.style.display = 'flex'; // Ensure categories are visible
                     wordTable.innerHTML = ''; // Clear existing categories (if any)
                     
                     Object.keys(categories).forEach(categoryName => {
@@ -382,7 +383,7 @@ const enemyKilled = () => {
     restartButton.addEventListener("click", () => {
         // Reset battle and navigate back to the main screen
         messageContainer.remove();
-        monsterSection.style.display = "block";
+        monsterSection.style.display = "flex";
         battleSection.style.display = "none";
     });
 
@@ -509,7 +510,7 @@ cardContainer.addEventListener('click', function(event) {
 
 toggleCategoriesButton.addEventListener('click', () => {
     if (wordTable.style.display === 'none') {
-        wordTable.style.display = 'block'; // Show table
+        wordTable.style.display = 'flex'; // Show table
     } else {
         wordTable.style.display = 'none'; // Hide table
     }

@@ -12,123 +12,173 @@
     --rpg-glow: rgba(255, 215, 0, 0.4);
   }
   
-  /* Battle Section Layout */
-  #Battle {
+/* Battle Section Layout */
+#Battle {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+#PlayerArea {
+  width: 45%;
+  padding: 5%;
+  box-sizing: border-box;
+}
+
+/* Player Stats - RPG Style */
+#player_stats {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-size: 20px;
+  font-family: "MedievalSharp", serif;
+  color: var(--woodbrighthighlight);
+  background-color: var(--lightwood);
+  border: 6px ridge var(--woodbrown);
+  box-shadow: inset 0 0 10px var(--shadow_woodbrown), 0 8px 16px var(--woodhighlight);
+  border-radius: 12px;
+  position: relative;
+}
+
+#player_stats::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 12px;
+  border: 3px solid var(--rpg-accent);
+  box-shadow: 0 0 10px var(--rpg-glow);
+  pointer-events: none;
+}
+
+/* Spell Form - RPG Style */
+#spell_form {
+  margin-top: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-size: 20px;
+  font-family: "MedievalSharp", serif;
+  color: var(--woodbrighthighlight);
+  background-color: var(--lightwood);
+  border: 6px ridge var(--woodbrown);
+  box-shadow: inset 0 0 10px var(--shadow_woodbrown), 0 8px 16px var(--woodhighlight);
+  border-radius: 12px;
+  position: relative;
+}
+
+#spell_form::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 12px;
+  border: 3px solid var(--rpg-accent);
+  box-shadow: 0 0 10px var(--rpg-glow);
+  pointer-events: none;
+}
+
+#spell_form input {
+  font-family: "MedievalSharp", serif;
+  font-size: 18px;
+  color: var(--woodbrighthighlight);
+  background-color: var(--lightwood);
+  border: 4px ridge var(--woodbrown);
+  border-radius: 8px;
+  padding: 10px 15px;
+  box-shadow: inset 0 0 6px var(--shadow_woodbrown), 0 4px 8px var(--woodhighlight);
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+#spell_form input::placeholder {
+    color: var(--rpg-accent);
+    opacity: 1;
+}
+#spell_form input:focus {
+  border-color: var(--rpg-accent);
+  box-shadow: 0 0 10px var(--rpg-glow), inset 0 0 8px var(--rpg-accent);
+}
+
+button {
+  font-family: "MedievalSharp", serif;
+  font-size: 18px;
+  color: var(--woodbrighthighlight);
+  background-color: var(--lightwood);
+  border: 4px ridge var(--woodbrown);
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  box-shadow: inset 0 0 6px var(--shadow_woodbrown), 0 4px 8px var(--woodhighlight);
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--woodhighlight);
+  color: var(--rpg-accent);
+  box-shadow: 0 0 10px var(--rpg-glow), 0 6px 12px var(--woodhighlight);
+}
+
+button:active {
+  background-color: var(--lightwood);
+  box-shadow: inset 0 0 10px var(--shadow_woodbrown), 0 2px 4px var(--woodhighlight);
+  transform: translateY(2px);
+}
+
+#toggle_categories{
+  margin-top: 20px;
+}
+
+
+/* Categories */
+
+#word_table {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    justify-content: center;
     width: 100%;
-    height: 100%;
-  }
-  
-  #PlayerArea {
-    width: 35%;
-    padding: 5%;
-    box-sizing: border-box;
-  }
-  
-  /* Player Stats - RPG Style */
-  #player_stats {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    font-size: 20px;
-    font-family: "MedievalSharp", serif;
-    color: var(--woodbrighthighlight);
-    background-color: var(--lightwood);
-    border: 6px ridge var(--woodbrown);
-    box-shadow: inset 0 0 10px var(--shadow_woodbrown), 0 8px 16px var(--woodhighlight);
-    border-radius: 12px;
-    position: relative;
-  }
-  
-  #player_stats::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 12px;
-    border: 3px solid var(--rpg-accent);
-    box-shadow: 0 0 10px var(--rpg-glow);
-    pointer-events: none;
-  }
-  
-  /* Spell Form - RPG Style */
-  #spell_form {
+    border-collapse: collapse;
     margin-top: 20px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+}
+
+#word_table th, #word_table td {
+    padding: 12px;
+    text-align: center;
+    border: 2px solid var(--woodbrown);
+}
+
+#word_table th {
+    background-color: var(--woodbrown);
+    color: var(--woodbrighthighlight);
+    font-family: "MedievalSharp", serif;
     font-size: 20px;
-    font-family: "MedievalSharp", serif;
-    color: var(--woodbrighthighlight);
+    text-transform: uppercase;
+}
+
+#word_table td {
     background-color: var(--lightwood);
-    border: 6px ridge var(--woodbrown);
-    box-shadow: inset 0 0 10px var(--shadow_woodbrown), 0 8px 16px var(--woodhighlight);
-    border-radius: 12px;
-    position: relative;
-  }
-  
-  #spell_form::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 12px;
-    border: 3px solid var(--rpg-accent);
-    box-shadow: 0 0 10px var(--rpg-glow);
-    pointer-events: none;
-  }
-  
-  #spell_form input {
-    font-family: "MedievalSharp", serif;
-    font-size: 18px;
-    color: var(--woodbrighthighlight);
-    background-color: var(--lightwood);
-    border: 4px ridge var(--woodbrown);
-    border-radius: 8px;
-    padding: 10px 15px;
-    box-shadow: inset 0 0 6px var(--shadow_woodbrown), 0 4px 8px var(--woodhighlight);
-    outline: none;
-    transition: all 0.3s ease;
-  }
-  
-  #spell_form input:focus {
-    border-color: var(--rpg-accent);
-    box-shadow: 0 0 10px var(--rpg-glow), inset 0 0 8px var(--rpg-accent);
-  }
-  
-  button {
-    font-family: "MedievalSharp", serif;
-    font-size: 18px;
-    color: var(--woodbrighthighlight);
-    background-color: var(--lightwood);
-    border: 4px ridge var(--woodbrown);
-    border-radius: 8px;
-    padding: 10px 20px;
-    cursor: pointer;
-    box-shadow: inset 0 0 6px var(--shadow_woodbrown), 0 4px 8px var(--woodhighlight);
-    transition: all 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: var(--woodhighlight);
-    color: var(--rpg-accent);
-    box-shadow: 0 0 10px var(--rpg-glow), 0 6px 12px var(--woodhighlight);
-  }
-  
-  button:active {
-    background-color: var(--lightwood);
-    box-shadow: inset 0 0 10px var(--shadow_woodbrown), 0 2px 4px var(--woodhighlight);
-    transform: translateY(2px);
-  }
-  
-  #toggle_categories{
-    margin-top: 20px;
-  }
+    color: black;
+    font-family: "Arial", sans-serif;
+    font-size: 16px;
+}
+
+#word_table tr:nth-child(even) td {
+    background-color: var(--woodhighlight); /* Alternating row color */
+}
+
+#word_table tr:hover td {
+    background-color: var(--rpg-glow); /* Highlight rows when hovered */
+}
+
+#word_table tbody td {
+    text-align: center; /* Ensure words are centered in the cells */
+}
