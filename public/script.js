@@ -470,7 +470,8 @@ const getEnemyHP = async () => {
 
         const enemyHealth = document.querySelector(`.battle${clickedMonster} .enemy_health`);
         if (enemyHealth && enemyHealth.parentNode) {
-            enemyHealth.textContent = 'Health: ' + enemy.attributes.health;
+            // Wrap the health value in a <strong> tag to make it bold
+            enemyHealth.innerHTML = '<strong>Health: </strong>' + enemy.attributes.health;
         } else {
             console.warn("Enemy health element not found.");
         }
@@ -480,17 +481,35 @@ const getEnemyHP = async () => {
     }
 };
 
-const updateBattleLog = (message) => {
-    const battleLog = document.getElementById("BattleLogs");
+
+const updateBattleLog = (message, isSpellFail = false, isEnemyHealed = false) => {
+    const battleLogList = document.getElementById("battle_log_list");
+
+    // Clear the battle log if there are more than 3 items
+    const maxLogs = 3;
+    const existingLogs = battleLogList.getElementsByTagName("li");
+    if (existingLogs.length >= maxLogs) {
+        battleLogList.removeChild(existingLogs[0]); // Remove the oldest log entry
+    }
 
     // Create a new log entry
-    const logEntry = document.createElement("p");
-    logEntry.textContent = message;
-    battleLog.appendChild(logEntry);
+    const newLog = document.createElement("li");
+    newLog.textContent = message;
 
-    // Scroll to the bottom of the log
-    battleLog.scrollTop = battleLog.scrollHeight;
+    // Add special class for spell failure or healing messages
+    if (isSpellFail) {
+        newLog.classList.add("spell-fail");
+    } else if (isEnemyHealed) {
+        newLog.classList.add("enemy-healed");
+    }
+
+    // Append the new log to the battle log list
+    battleLogList.appendChild(newLog);
+
+    // Auto-scroll to the latest log
+    battleLogList.scrollTop = battleLogList.scrollHeight;
 };
+
 
 
 //Event Listeners

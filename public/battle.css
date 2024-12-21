@@ -30,6 +30,7 @@
 
 /* Player Stats - RPG Style */
 #player_stats {
+  margin-top: -30px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -216,7 +217,7 @@ button:active {
   border-radius: 12px;
   font-family: "MedievalSharp", serif;
   font-size: 18px;
-  max-height: 120px;
+  max-height: 170px;
   overflow-y: auto;
   margin: 10px auto;
 }
@@ -236,7 +237,7 @@ button:active {
 }
 
 #battle_log_list li {
-  background-color: var(--lightwood);
+  background-color: var(--woodhighlight);
   padding: 10px;
   margin: 5px 0;
   border-radius: 8px;
@@ -259,13 +260,6 @@ button:active {
 }
 
 #battle_log_list li.enemy-healed {
-  background-color: var(--woodbrown);
+  background-color: var(--woodhighlight);
   color: var(--woodbrighthighlight);
-}
-
-/* Latest Entry Highlight */
-#battle_log_list li:last-child {
-  background-color: var(--rpg-glow);
-  color: var(--woodbrown);
-  font-weight: bold;
 }
