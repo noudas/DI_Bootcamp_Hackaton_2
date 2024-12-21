@@ -148,9 +148,11 @@ button:active {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    gap: 10px;
 }
 
 #word_table th, #word_table td {
+
     padding: 12px;
     text-align: center;
     border: 2px solid var(--woodbrown);
@@ -159,9 +161,11 @@ button:active {
 #word_table th {
     background-color: var(--woodbrown);
     color: var(--woodbrighthighlight);
+    border: 2px solid var(--shadow_woodbrown);
     font-family: "MedievalSharp", serif;
     font-size: 20px;
     text-transform: uppercase;
+
 }
 
 #word_table td {
