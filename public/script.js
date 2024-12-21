@@ -504,7 +504,7 @@ cardContainer.addEventListener('click', function(event) {
         console.log("Clicked Monster:", clickedMonster);
     }
     monsterSection.style.display = "none";
-    battleSection.style.display = "block";
+    battleSection.style.display = "flex";
 });
 
 toggleCategoriesButton.addEventListener('click', () => {

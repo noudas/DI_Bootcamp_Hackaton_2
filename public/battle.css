@@ -1,0 +1,8 @@
+#Battle {
+    display: flex;
+    flex-direction: row;
+}
+
+#player_stats {
+    background-color: aqua;
+}
