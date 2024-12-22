@@ -1,4 +1,4 @@
-class Entity {
+export class Entity {
     constructor(health = 10, attack = 1) {
         this.health = Math.max(0, health); // Prevent negative health
         this.attack = Math.max(0, attack); // Prevent negative attack
@@ -36,4 +36,3 @@ class Entity {
 
 }
 
-module.exports = Entity

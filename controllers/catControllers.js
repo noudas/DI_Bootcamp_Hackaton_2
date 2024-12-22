@@ -1,11 +1,10 @@
-const { categories } = require('../config/data.js');
+import {categories} from "../config/data.js";
 
-
-const getAllCats = (req, res) => {
+export const getAllCats = (req, res) => {
     res.json(categories);
 }
 
-const getAllWordsInCat = (req, res) => {
+export const getAllWordsInCat = (req, res) => {
     const { category } = req.params
 
     if (categories[category])//check if category exists
@@ -16,7 +15,7 @@ const getAllWordsInCat = (req, res) => {
     }
 }
 
-const addNewCat = (req, res) => {
+export const addNewCat = (req, res) => {
     const { name, words } = req.body
 
     if (!name || !Array.isArray(words)) {
@@ -32,7 +31,7 @@ const addNewCat = (req, res) => {
     res.status(201).json({ message: "category added successfully" , categories})
 }
 
-const deleteCat = (req, res) => {
+export const deleteCat = (req, res) => {
     const { category } = req.params
 
     if (categories[category])//check if category exists
@@ -44,10 +43,3 @@ const deleteCat = (req, res) => {
     }
 }
 
-
-module.exports= {
-    getAllCats,
-    getAllWordsInCat,
-    addNewCat,
-    deleteCat,
-}
