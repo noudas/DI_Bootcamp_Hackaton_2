@@ -10,8 +10,12 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
+- [Code Overview](#code-overview)
+  - [Key Classes](#key-classes)
+  - [Word Categories](#word-categories)
 - [Contributing](#contributing)
 - [License](#license)
+
 
 ---
 
@@ -57,7 +61,7 @@ The project is organized into the following structure:
 
 Clone the repository:
    ```bash
-   git clone https://github.com/your-username/DI_Bootcamp_Hackaton_2.git
+   git clone https://github.com/noudas/DI_Bootcamp_Hackaton_2.git
    cd DI_Bootcamp_Hackaton_2
    ```
 
@@ -72,3 +76,14 @@ Run the server:
 ``` bash
 node server.js
 ```
+
+---
+
+## Usage
+* Open your browser and navigate to http://localhost:5000 (or the port specified in your configuration).
+* Start the game by choosing an enemy.
+* Enter words in the input field to attack enemies.
+* Defeat enemies to progress through the dungeon and learn new words!
+
+---
+
