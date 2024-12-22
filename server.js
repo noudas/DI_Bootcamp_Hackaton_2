@@ -1,7 +1,7 @@
 const express = require("express");
 
 const cors = require("cors");
-const {catRouter}= require('./routes/catRouter.js');
+const {catRouter}= require('./routes/catRouter');
 const playerRoutes = require("./routes/playerRoute");
 const enemyRoutes = require("./routes/enemyRoute");
 
