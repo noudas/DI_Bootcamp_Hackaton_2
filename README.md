@@ -23,8 +23,6 @@ Language Learning RPG is designed to help users improve their vocabulary by chal
 ## Folder Structure
 The project is organized into the following structure:
 
-'''
-*/main 
     * /config data.js           -> Hardcoded category data 
         * entityClass.js        -> Parent class for the Enemy and Player 
         * enemyClass.js         -> Class for creating the Enemy 
