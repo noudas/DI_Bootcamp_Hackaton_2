@@ -87,3 +87,11 @@ node server.js
 
 ---
 
+## Features
+* Interactive Gameplay: Defeat enemies by typing valid words from a selected category.
+* Customizable Vocabulary: Expand or modify word categories using the backend data.js file.
+* Responsive Design: Styled with CSS to enhance the user experience.
+* Dynamic Enemy Generation: New enemies are generated dynamically for each battle.
+* Word Validation: Ensures that words entered by the player are valid for the chosen category.
+
+---
