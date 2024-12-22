@@ -1,7 +1,7 @@
-const Player = require("../config/playerClass");
-const { checkWord } = require("../utils/wordChecker");
+import { checkWord }  from "../utils/wordChecker.js";
+import {Player}  from "../config/playerClass.js";
 
-class PlayerController {
+ class PlayerController {
     constructor() {
         this.players = [];
     }
@@ -75,4 +75,5 @@ class PlayerController {
     }
 }
 
-module.exports = new PlayerController();
+export default new PlayerController();
+
