@@ -713,7 +713,6 @@ toggleCategoriesButton.addEventListener('click', () => {
     }
 });
 
-
 // Intervals
 // Run every 400ms
 let isChecking = false;
