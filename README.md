@@ -100,29 +100,32 @@ node server.js
 
 ## Code Overview
 
-**Key Classes**
-bash´´´
+## Key Classes
+```bash
 Entity (Base Class): Handles shared properties and methods for both Player and Enemy classes, including health, attack power, and win/lose conditions.
 Player: Extends Entity and adds specific features like score tracking and player-specific actions.
 Enemy: Extends Entity and includes additional properties such as weaknesses and methods for handling enhanced damage.
-´´´
+```
 
-**Controllers**
-bash´´´
+## Controllers
+```bash
 Category Controller: Manages the operations related to word categories, including retrieving, adding, and deleting categories.
 Enemy Controller: Handles the creation and actions of enemies, including generating enemies, dealing damage, healing, and handling attack behaviors.
 Player Controller: Manages player-related operations, including health, score tracking, and resetting player stats.
-´´´
+```
 
-Routes
+## Routes
 Category Routes (catRouter.js):
 
+```bash
 GET /: Retrieve all categories.
 GET /:category: Retrieve all words within a specific category.
 POST /: Add a new category.
 DELETE /:category: Delete a category.
+```
 
 Enemy Routes (enemyRouter.js):
+```bash
 POST /create: Create a single enemy.
 POST /generate: Generate multiple enemies.
 GET /:name: Retrieve details of an enemy by name.
@@ -132,9 +135,10 @@ POST /:name/attack: Perform an attack from an enemy on the player.
 GET /:name/death: Check if the enemy has died.
 GET /:name/win: Check if the enemy has won.
 DELETE /:name: Delete an enemy.
+```
 
 Player Routes (playerRouter.js):
-
+```bash
 GET /: Retrieve all players.
 POST /create: Create a new player.
 GET /:name: Retrieve details of a player by name.
@@ -144,29 +148,39 @@ PATCH /:name/heal: Heal a player.
 GET /:name/win: Check if the player has won.
 GET /:name/death: Check if the player has died.
 PATCH /:name/restart: Reset player stats.
+```
 
-Server Configuration
+## Server Configuration
 The server.js file serves as the entry point for the application, connecting the backend to the frontend.
 
 Middleware:
+```bash
 express.static: Serves static files (like images, styles, etc.) from the public folder.
 body-parser: Parses incoming requests, including JSON and URL-encoded data.
 cors: Enables Cross-Origin Resource Sharing.
+```
 
 Routes:
+```bash
 /categories: Handles all category-related requests.
 /players: Manages all player-related operations.
 /enemies: Manages all enemy-related operations.
+```
 
+```bash
 Health Check:
 Endpoint: /healthcheck to verify server status.
 Response: Returns a 200 status with a success message to confirm the server is up.
+```
 
 Error Handling:
+```bash
 Middleware captures errors and sends back a 500 status with an error message.
+```
 
-Frontend Overview
+## Frontend Overview
 index.html: The main interface for the game, including:
+```bash
 A navigation bar displaying the game title.
 Sections for monster cards and the battle interface.
 Monster Cards Section: Displays available enemies with their stats.
@@ -177,6 +191,7 @@ Enemy Management: Dynamically fetch and display enemies using getEnemy(), create
 Player Interactions: Fetch player data and update stats like health and experience points. Manage player actions such as healing and casting spells.
 
 Battle Management: Handles spell casting, tracks battle events, and manages enemy attacks and win/loss conditions.
+```
 
 Example of spell casting event listener:
 
