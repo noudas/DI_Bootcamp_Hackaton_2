@@ -1,7 +1,7 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
-import enemyController from "../controllers/enemyController.js";
-import playerController from "../controllers/playerController.js";
+const enemyController = require("../controllers/enemyController");
+const playerController = require("../controllers/playerController");
 
 router.post("/create", (req, res) => {
     const { name, health, attack, weakness } = req.body;
@@ -110,4 +110,4 @@ router.delete("/:name", (req, res) => {
     }
 });
 
-export default router;
+module.exports = router;

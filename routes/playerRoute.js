@@ -1,7 +1,6 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
-import playerController from "../controllers/playerController.js";
-// const playerController= new PlayerController();
+const playerController = require("../controllers/playerController");
 
 router.get("/", (req,res) => {
     try {
