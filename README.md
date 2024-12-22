@@ -23,7 +23,7 @@ Language Learning RPG is designed to help users improve their vocabulary by chal
 ## Folder Structure
 The project is organized into the following structure:
 
-´´´
+'''
 */main 
     * /config data.js           -> Hardcoded category data 
         * entityClass.js        -> Parent class for the Enemy and Player 
@@ -43,4 +43,4 @@ The project is organized into the following structure:
 
     .gitignore # Specifies files to be ignored by Git package.json # Project dependencies and scripts server.js # Connects frontend and backend
 
-    ´´´
+  '''
