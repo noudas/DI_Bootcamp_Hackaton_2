@@ -25,9 +25,9 @@ The project is organized into the following structure:
 
 /main 
 * /config data.js # Hardcoded category data 
-* * entityClass.js # Parent class for the Enemy and Player 
-* * enemyClass.js # Class for creating the Enemy 
-* * playerClass.js # Class for creating the Player
+- entityClass.js # Parent class for the Enemy and Player 
+- enemyClass.js # Class for creating the Enemy 
+- playerClass.js # Class for creating the Player
 
 /controllers catControllers.js # Category controller enemyController.js # Enemy controller playerController.js# Player controller
 
