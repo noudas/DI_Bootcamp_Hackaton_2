@@ -31,7 +31,12 @@ const monsters = [
     "https://robohash.org/NHX.png?set=set2&size=150x150",
     "https://robohash.org/TVH.png?set=set2&size=150x150",
     "https://robohash.org/XEG.png?set=set2&size=150x150",
-    "https://robohash.org/VVN.png?set=set2&size=150x150"
+    "https://robohash.org/VVN.png?set=set2&size=150x150",
+    "https://robohash.org/ASD.png?set=set2&size=150x150",
+    "https://robohash.org/DSA.png?set=set2&size=150x150",
+    "https://robohash.org/WQE.png?set=set2&size=150x150",
+    "https://robohash.org/TRE.png?set=set2&size=150x150",
+    "https://robohash.org/YUI.png?set=set2&size=150x150"
 ]
 let imgIndex = 0
 let clickedMonster
@@ -481,7 +486,6 @@ const getEnemyHP = async () => {
     }
 };
 
-
 const updateBattleLog = (message, isSpellFail = false, isEnemyHealed = false) => {
     const battleLogList = document.getElementById("battle_log_list");
 
@@ -510,6 +514,51 @@ const updateBattleLog = (message, isSpellFail = false, isEnemyHealed = false) =>
     battleLogList.scrollTop = battleLogList.scrollHeight;
 };
 
+let deathMessageShown = false;
+const youAreDead = async () => {
+    // Prevent showing the death message multiple times
+    if (deathMessageShown) return;
+    
+    const players = await getPlayer();
+    const player = players[0];
+
+    if (player.health === 0 && player.lose_condition === true) {
+        // Set the flag to true to prevent multiple executions
+        deathMessageShown = true;
+
+        // Add message to the battle log
+        updateBattleLog(`You died!`);
+    
+        // Existing win message display logic
+        const messageContainer = document.createElement("div");
+        messageContainer.classList.add("win-message");
+    
+        const messageText = document.createElement("h2");
+        messageText.textContent = "You are dead!";
+    
+        const restartButton = document.createElement("button");
+        restartButton.textContent = "Restart?";
+        restartButton.classList.add("restart-button");
+        restartButton.addEventListener("click", () => {
+            // Reset player stats
+            player.health = 30;
+            player.score = 0;
+            
+            // Remove the death message and reset game state
+            messageContainer.remove();
+            monsterSection.style.display = "flex";
+            battleSection.style.display = "none";
+            
+            // Reset the death message flag
+            deathMessageShown = false;
+        });
+    
+        messageContainer.appendChild(messageText);
+        messageContainer.appendChild(restartButton);
+        document.body.appendChild(messageContainer);
+    }
+};
+
 
 
 //Event Listeners
@@ -517,6 +566,7 @@ spellBtn.addEventListener('click', async function(event) {
     event.preventDefault();
     await playerAttack(clickedMonster);
     await enemyAttack();
+    await youAreDead();
     spellInput.value = '';
 });
 
