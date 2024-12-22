@@ -2,7 +2,7 @@ const Enemy = require("../config/enemyClass");
 const { checkWord } = require("../utils/wordChecker");
 const generateEnemies = require("../utils/enemyGenerator");
 
- class EnemyController {
+class EnemyController {
     constructor() {
         this.enemies = {};
     }
@@ -97,4 +97,4 @@ const generateEnemies = require("../utils/enemyGenerator");
     }
 }
 
-export default new EnemyController();
+module.exports = new EnemyController();
