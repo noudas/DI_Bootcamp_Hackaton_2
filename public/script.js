@@ -21,6 +21,7 @@ const selectedMonster = "";
 const playerAPIURL = 'http://localhost:5000/players/';
 const catApiUrl = 'http://localhost:5000/categories/';
 const enemiesApiUrl = 'http://localhost:5000/enemies/';
+const generateEnemiesApiUrl = 'http://localhost:5000/enemies/generate';
 
 
 
@@ -52,6 +53,23 @@ const getEnemy = async () => {
         return null; // Return null to handle gracefully when fetch fails
     }
 };
+
+const generateEnemies = async () => {
+    try {
+        const response = await fetch(generateEnemiesApiUrl, {
+            method: 'POST', 
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ count: 10 })  // Requesting 10 enemies to be generated
+        });
+
+        if (!response.ok) throw new Error("Error generating enemies");
+        return response.json();
+    } catch (error) {
+        console.error("Failed to generate enemies:", error);
+        return null;
+    }
+}
+generateEnemies();
 
 // Create an enemy card element
 const createEnemyCard = (enemy) => {

@@ -13,6 +13,16 @@ router.post("/create", (req, res) => {
     }
 });
 
+router.post("/generate", (req, res) => {
+    const { count } = req.body;  // Optional: count can be specified in the request body
+    try {
+        const enemies = enemyController.createMultipleEnemies(count || 10); // Default to 10 enemies if no count is provided
+        res.status(201).json({ message: `${enemies.length} enemies created successfully`, enemies });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
 router.get("/:name", (req, res) => {
     const { name } = req.params;
     try {
