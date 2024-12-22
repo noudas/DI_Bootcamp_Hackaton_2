@@ -57,9 +57,9 @@ class PlayerController {
     restartPlayer(name) {
         const player = this.findPlayerByName(name);
         if (player) {
-            player.health = 10; // Reset health to default
-            player.attack = 1;  // Reset attack to default
-            player.score = 0;   // Reset score to default
+            player.health = 10;
+            player.attack = 1;
+            player.score = 0;
             return player;
         }
         throw new Error(`Player ${name} not found`);

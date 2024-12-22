@@ -574,6 +574,71 @@ const youAreDead = async () => {
     }
 };
 
+const youWin = async () => {
+    try {
+        const players = await getPlayer();
+        const player = players[0];
+
+        if (!player) {
+            console.error("Player data is missing!");
+            return;
+        }
+
+        // Check if the player meets the win condition
+        if (player.score >= 10 && player.win_condition) {
+            // Add message to the battle log
+            updateBattleLog(`Congratulations! You won the game!`);
+
+            const messageContainer = document.createElement("div");
+            messageContainer.classList.add("win-message");
+
+            const messageText = document.createElement("h2");
+            messageText.textContent = "You Win! 🎉";
+
+            const restartButton = document.createElement("button");
+            restartButton.textContent = "Restart?";
+            restartButton.classList.add("restart-button");
+
+            // Restart button functionality
+            restartButton.addEventListener("click", async () => {
+                try {
+                    // Reset player stats using the restart API endpoint
+                    await fetch(`${playerAPIURL}${player.name}/restart`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+
+                    // Remove the win message
+                    messageContainer.remove();
+                    monsterSection.style.display = "flex";
+                    battleSection.style.display = "none";
+                } catch (error) {
+                    console.error("Error resetting player:", error);
+                }
+            });
+
+            const continueButton = document.createElement("button");
+            continueButton.textContent = "Continue";
+            continueButton.classList.add("continue-button");
+
+            // Continue button functionality
+            continueButton.addEventListener("click", () => {
+                // Hide the win message and proceed with the game
+                messageContainer.remove();
+                monsterSection.style.display = "flex";
+                battleSection.style.display = "none";
+            });
+
+            messageContainer.appendChild(messageText);
+            messageContainer.appendChild(restartButton);
+            messageContainer.appendChild(continueButton);
+            document.body.appendChild(messageContainer);
+        }
+    } catch (error) {
+        console.error("Error in youWin:", error);
+    }
+};
+
 
 //Event Listeners
 let intervalId;
@@ -612,7 +677,7 @@ toggleCategoriesButton.addEventListener('click', () => {
 
 
 // Intervals
-// Run every 200ms
+// Run every 400ms
 let isChecking = false;
 setInterval(() => {
     if (!isChecking) {
