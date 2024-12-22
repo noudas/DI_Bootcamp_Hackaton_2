@@ -1,5 +1,4 @@
-
-export const categories = {
+const categories = {
     Food: [
         "Apple",
         "Banana",
@@ -72,3 +71,4 @@ export const categories = {
     
 
 
+module.exports={categories};
