@@ -639,6 +639,24 @@ const youWin = async () => {
     }
 };
 
+const checkWinCondition = async () => {
+    try {
+        const players = await getPlayer();
+        const player = players[0];
+
+        if (!player) {
+            console.error("Player data is missing!");
+            return;
+        }
+
+        // Trigger `youWin` if the win condition is met
+        if (player.score >= 10 && player.win_condition) {
+            await youWin();
+        }
+    } catch (error) {
+        console.error("Error in checkWinCondition:", error);
+    }
+};
 
 //Event Listeners
 let intervalId;
@@ -648,6 +666,7 @@ spellBtn.addEventListener('click', async function (event) {
     await playerAttack(clickedMonster);
     await enemyAttack();
     await youAreDead();
+    await checkWinCondition();
     spellInput.value = '';
     intervalId = setInterval(intervalChecks, 400); // Resume interval
 });
@@ -690,3 +709,7 @@ setInterval(() => {
         isChecking = false;
     }
 }, 400);
+
+setInterval(() => {
+    checkWinCondition();
+}, 500);
