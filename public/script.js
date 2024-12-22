@@ -10,6 +10,7 @@ const playerHealth = document.getElementById("player_health");
 const playerXP = document.getElementById("player_XP");
 const spellInput = document.getElementById("spell_input");
 const spellBtn = document.getElementById("spell_btn");
+const healBtn = document.getElementById("heal_player");
 
 // Monster Related
 const cardContainer = document.getElementById("card_container");
@@ -178,6 +179,23 @@ const getSpell = () => {
     return playerWord
 };
 
+const healPlayer = async () => {
+    const players = await getPlayer()
+    const player = players[0]
+    if (!player) return;
+
+    const response = await fetch(`${playerAPIURL}${player.name}/heal`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ amount: 3 }) // Assuming the backend increments the score
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to heal: ${response.status}`);
+    }
+}
 
 
 // Categories
@@ -691,7 +709,11 @@ spellBtn.addEventListener('click', async function (event) {
     intervalId = setInterval(intervalChecks, 400); // Resume interval
 });
 
-
+healBtn.addEventListener("click", async function(event) {
+    event.preventDefault();
+    healPlayer();
+    await enemyAttack();
+});
 
 cardContainer.addEventListener('click', function(event) {
     const clickedCard = event.target.closest('.enemy_card');

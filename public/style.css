@@ -119,3 +119,17 @@ nav h1 {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
 }
+
+/* Add keyframe animation for shaking */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+  75% { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
+}
+
+/* Apply shake animation on hover */
+.enemy_card:hover {
+  animation: shake 0.5s ease-in-out; /* 0.5s duration, ease-in-out for smooth effect */
+}
