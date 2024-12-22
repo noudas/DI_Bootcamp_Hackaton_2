@@ -27,6 +27,7 @@ const generateEnemiesApiUrl = 'http://localhost:5000/enemies/generate';
 
 
 //Monster Cards
+// I dunno where to remove... now this part is necessary
 const monsters = [
     "https://robohash.org/P1Q.png?set=set2&size=150x150",
     "https://robohash.org/NHX.png?set=set2&size=150x150",
