@@ -1,6 +1,6 @@
-import {Enemy} from "../config/enemyClass.js";
-import { checkWord }  from "../utils/wordChecker.js";
-
+const Enemy = require("../config/enemyClass");
+const { checkWord } = require("../utils/wordChecker");
+const generateEnemies = require("../utils/enemyGenerator");
 
  class EnemyController {
     constructor() {
@@ -14,6 +14,22 @@ import { checkWord }  from "../utils/wordChecker.js";
         const enemy = new Enemy(health, attack, weakness);
         this.enemies[name] = enemy;
         return enemy;
+    }
+
+    createMultipleEnemies(count = 10) {
+        const generatedEnemies = generateEnemies(count); // Generate an array of random enemies
+
+        // Add each generated enemy to the enemies collection
+        generatedEnemies.forEach(enemyData => {
+            const { name, health, attack, weakness, image } = enemyData;
+            if (!this.enemies[name]) {  // Ensure no duplicate names
+                const enemy = new Enemy(health, attack, weakness);
+                enemy.image = image; // Add image to the enemy
+                this.enemies[name] = enemy;
+            }
+        });
+
+        return generatedEnemies;
     }
 
     findEnemyByName(name) {
@@ -52,10 +68,10 @@ import { checkWord }  from "../utils/wordChecker.js";
         if (!enemy) {
             throw new Error(`Enemy ${name} not found.`);
         }
-    
+
         // Perform attack
         enemy.attackPlayer(player);
-    
+
         // Return enemy and updated player state
         return { enemy, player };
     }

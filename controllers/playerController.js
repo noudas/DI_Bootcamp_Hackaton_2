@@ -53,6 +53,19 @@ import {Player}  from "../config/playerClass.js";
         throw new Error(`Player ${name} not found`);
     }
 
+    
+    restartPlayer(name) {
+        const player = this.findPlayerByName(name);
+        if (player) {
+            player.health = 10;
+            player.attack = 1;
+            player.score = 0;
+            return player;
+        }
+        throw new Error(`Player ${name} not found`);
+    }
+    
+
     checkWin(name) {
         const player = this.findPlayerByName(name);
         if (player) {
