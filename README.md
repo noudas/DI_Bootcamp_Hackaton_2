@@ -33,12 +33,22 @@ The project is organized into the following structure:
         enemyController.js    -> Enemy controller 
         playerController.js   -> Player controller
 
-    * /routes catRouter.js # Routes for category-related operations enemyRouter.js # Routes for enemy-related operations playerRouter.js # Routes for player-related operations
+    /routes 
+        catRouter.js          -> Routes for category-related operations 
+        enemyRouter.js        -> Routes for enemy-related operations 
+        playerRouter.js       -> Routes for player-related operations
 
-    * /public battle.css # Styles for the battle screen style.css # General styles for the project script.js # Frontend interactions with the backend and DOM index.html # Main HTML file for the project
+    /public 
+        battle.css            -> Styles for the battle screen 
+        style.css             -> General styles for the project 
+        script.js             -> Frontend interactions with the backend and DOM 
+        index.html            -> Main HTML file for the project
 
-    * /utils enemyGenerator.js # Generates enemies on the screen wordChecker.js # Checks word validity and determines attack strength
+    /utils 
+        enemyGenerator.js     -> Generates enemies on the screen 
+        wordChecker.js        -> Checks word validity and determines attack strength
 
-    .gitignore # Specifies files to be ignored by Git package.json # Project dependencies and scripts server.js # Connects frontend and backend
+    .gitignore                -> Specifies files to be ignored by Git package.json # Project dependencies and scripts 
+    server.js                 -> Connects frontend and backend
 
   '''
