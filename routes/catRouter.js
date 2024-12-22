@@ -1,10 +1,11 @@
-import { Router } from "express";
-import {
+const { Router } = require("express");
+
+const {
     getAllCats,
     getAllWordsInCat,
     addNewCat,
     deleteCat,
-}from '../controllers/catControllers.js'
+} = require('../controllers/catControllers.js')
 
 const router = Router();
 
@@ -20,4 +21,6 @@ router.post("/", addNewCat)
 // delete category
 router.delete("/:category", deleteCat)
 
-export const catRouter = router;
+module.exports = {
+    catRouter: router,
+};
