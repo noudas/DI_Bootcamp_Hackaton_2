@@ -69,6 +69,7 @@ const generateEnemies = async () => {
         return null;
     }
 }
+
 generateEnemies();
 
 // Create an enemy card element
