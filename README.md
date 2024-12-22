@@ -51,4 +51,24 @@ The project is organized into the following structure:
     .gitignore                -> Specifies files to be ignored by Git package.json # Project dependencies and scripts 
     server.js                 -> Connects frontend and backend
 
-  '''
+---
+
+## Installation
+
+Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/DI_Bootcamp_Hackaton_2.git
+   cd DI_Bootcamp_Hackaton_2
+   ```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the server:
+
+``` bash
+node server.js
+```
