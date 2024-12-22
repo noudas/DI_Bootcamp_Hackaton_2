@@ -167,8 +167,8 @@ Routes:
 /enemies: Manages all enemy-related operations.
 ```
 
-```bash
 Health Check:
+```bash
 Endpoint: /healthcheck to verify server status.
 Response: Returns a 200 status with a success message to confirm the server is up.
 ```
@@ -195,8 +195,7 @@ Battle Management: Handles spell casting, tracks battle events, and manages enem
 
 Example of spell casting event listener:
 
-javascript
-Copiar código
+```bash
 spellBtn.addEventListener('click', async function (event) {
     event.preventDefault();
     await playerAttack(clickedMonster);
@@ -204,6 +203,10 @@ spellBtn.addEventListener('click', async function (event) {
     await checkWinCondition();
     spellInput.value = '';
 });
-Utils
+```
+
+## Utils
+```bash
 Enemy Generator (enemyGenerator.js): Creates random enemies with unique properties like stats, images, and weaknesses.
 Word Checker (wordChecker.js): Validates the player's word input against categories and calculates attack damage based on word length.
+```
