@@ -35,9 +35,6 @@ function calculateDamage(wordLength) {
     return 0;
 }
 
-module.exports = {
-    checkWord
-}
 
 
 // console.log(checkWord("French fries"))
