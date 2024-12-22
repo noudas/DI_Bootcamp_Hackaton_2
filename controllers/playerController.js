@@ -53,6 +53,19 @@ class PlayerController {
         throw new Error(`Player ${name} not found`);
     }
 
+    
+    restartPlayer(name) {
+        const player = this.findPlayerByName(name);
+        if (player) {
+            player.health = 10; // Reset health to default
+            player.attack = 1;  // Reset attack to default
+            player.score = 0;   // Reset score to default
+            return player;
+        }
+        throw new Error(`Player ${name} not found`);
+    }
+    
+
     checkWin(name) {
         const player = this.findPlayerByName(name);
         if (player) {

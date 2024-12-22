@@ -84,4 +84,15 @@ router.get("/:name/death", (req, res) => {
     }
 });
 
+router.patch("/:name/restart", (req, res) => {
+    const { name } = req.params;
+    try {
+        const player = playerController.restartPlayer(name);
+        res.status(200).json({ message: "Player reset successfully", player });
+    } catch (error) {
+        res.status(404).json({ error: error.message });
+    }
+});
+
+
 module.exports = router;

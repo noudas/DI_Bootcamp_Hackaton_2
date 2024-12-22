@@ -515,59 +515,76 @@ const updateBattleLog = (message, isSpellFail = false, isEnemyHealed = false) =>
 };
 
 let deathMessageShown = false;
+
 const youAreDead = async () => {
-    // Prevent showing the death message multiple times
     if (deathMessageShown) return;
-    
-    const players = await getPlayer();
-    const player = players[0];
 
-    if (player.health === 0 && player.lose_condition === true) {
-        // Set the flag to true to prevent multiple executions
-        deathMessageShown = true;
+    try {
+        const players = await getPlayer();
+        const player = players[0];
 
-        // Add message to the battle log
-        updateBattleLog(`You died!`);
-    
-        // Existing win message display logic
-        const messageContainer = document.createElement("div");
-        messageContainer.classList.add("win-message");
-    
-        const messageText = document.createElement("h2");
-        messageText.textContent = "You are dead!";
-    
-        const restartButton = document.createElement("button");
-        restartButton.textContent = "Restart?";
-        restartButton.classList.add("restart-button");
-        restartButton.addEventListener("click", () => {
-            // Reset player stats
-            player.health = 30;
-            player.score = 0;
-            
-            // Remove the death message and reset game state
-            messageContainer.remove();
-            monsterSection.style.display = "flex";
-            battleSection.style.display = "none";
-            
-            // Reset the death message flag
-            deathMessageShown = false;
-        });
-    
-        messageContainer.appendChild(messageText);
-        messageContainer.appendChild(restartButton);
-        document.body.appendChild(messageContainer);
+        if (!player) {
+            console.error("Player data is missing!");
+            return;
+        }
+
+        if (player.health === 0 && player.lose_condition) {
+            deathMessageShown = true;
+
+            // Add message to the battle log
+            updateBattleLog(`You died!`);
+
+            const messageContainer = document.createElement("div");
+            messageContainer.classList.add("win-message");
+
+            const messageText = document.createElement("h2");
+            messageText.textContent = "You are dead!";
+
+            const restartButton = document.createElement("button");
+            restartButton.textContent = "Restart?";
+            restartButton.classList.add("restart-button");
+
+            // Attach click event to restart button
+            restartButton.addEventListener("click", async () => {
+                try {
+                    // Reset player stats using the restart API endpoint
+                    await fetch(`${playerAPIURL}${player.name}/restart`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+
+                    // Remove the death message
+                    messageContainer.remove();
+                    monsterSection.style.display = "flex";
+                    battleSection.style.display = "none";
+
+                    // Reset death flag
+                    deathMessageShown = false;
+                } catch (error) {
+                    console.error("Error resetting player:", error);
+                }
+            });
+
+            messageContainer.appendChild(messageText);
+            messageContainer.appendChild(restartButton);
+            document.body.appendChild(messageContainer);
+        }
+    } catch (error) {
+        console.error("Error in youAreDead:", error);
     }
 };
 
 
-
 //Event Listeners
-spellBtn.addEventListener('click', async function(event) {
+let intervalId;
+spellBtn.addEventListener('click', async function (event) {
     event.preventDefault();
+    clearInterval(intervalId); // Pause interval
     await playerAttack(clickedMonster);
     await enemyAttack();
     await youAreDead();
     spellInput.value = '';
+    intervalId = setInterval(intervalChecks, 400); // Resume interval
 });
 
 
@@ -596,11 +613,15 @@ toggleCategoriesButton.addEventListener('click', () => {
 
 // Intervals
 // Run every 200ms
-checkEnemyAlive();
+let isChecking = false;
 setInterval(() => {
-    checkEnemyAlive();
-    checkEnemyAliveBattle();
-    getPlayerHP();
-    getPlayerScore();
-    getEnemyHP();
+    if (!isChecking) {
+        isChecking = true;
+        checkEnemyAlive();
+        checkEnemyAliveBattle();
+        getPlayerHP();
+        getPlayerScore();
+        getEnemyHP();
+        isChecking = false;
+    }
 }, 400);
