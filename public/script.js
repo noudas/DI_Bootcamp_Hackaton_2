@@ -19,10 +19,15 @@ const battleSection = document.getElementById("Battle");
 const selectedMonster = "";
 
 // APIs URLs
-const playerAPIURL = 'http://localhost:5000/players/';
-const catApiUrl = 'http://localhost:5000/categories/';
-const enemiesApiUrl = 'http://localhost:5000/enemies/';
-const generateEnemiesApiUrl = 'http://localhost:5000/enemies/generate';
+
+const API_BASE_URL = window.location.hostname === "localhost"
+  ? "http://localhost:5000"
+  : "https://di-bootcamp-hackaton-2.onrender.com";
+
+const playerAPIURL = `${API_BASE_URL}/players/`;
+const catApiUrl = `${API_BASE_URL}/categories/`;
+const enemiesApiUrl = `${API_BASE_URL}/enemies/`;
+const generateEnemiesApiUrl = `${API_BASE_URL}/enemies/generate`;
 
 
 
